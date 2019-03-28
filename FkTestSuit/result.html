@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.9.1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.common.min.js"></script>
+    <!-- <script type="text/javascript" src="js/echarts.common.min.js"></script> -->
+    
+    
+<style type="text/css" media="screen">
+    body        { font-family: Microsoft YaHei,Consolas,arial,sans-serif; font-size: 80%; }
+    table       { font-size: 100%; }
+    pre         { white-space: pre-wrap;word-wrap: break-word; }
+
+    /* -- heading ---------------------------------------------------------------------- */
+    h1 {
+        font-size: 16pt;
+        color: gray;
+    }
+    .heading {
+        margin-top: 0ex;
+        margin-bottom: 1ex;
+    }
+
+    .heading .attribute {
+        margin-top: 1ex;
+        margin-bottom: 0;
+    }
+
+    .heading .description {
+        margin-top: 2ex;
+        margin-bottom: 3ex;
+    }
+
+    /* -- css div popup ------------------------------------------------------------------------ */
+    a.popup_link {
+    }
+
+    a.popup_link:hover {
+        color: red;
+    }
+
+    .popup_window {
+        display: none;
+        position: relative;
+        left: 0px;
+        top: 0px;
+        /*border: solid #627173 1px; */
+        padding: 10px;
+        /*background-color: #E6E6D6; */
+        font-family: "Lucida Console", "Courier New", Courier, monospace;
+        text-align: left;
+        font-size: 8pt;
+        /* width: 500px;*/
+    }
+
+    }
+    /* -- report ------------------------------------------------------------------------ */
+    #show_detail_line {
+        margin-top: 3ex;
+        margin-bottom: 1ex;
+    }
+    #result_table {
+        width: 99%;
+    }
+    #header_row {
+        font-weight: bold;
+        color: #303641;
+        background-color: #ebebeb;
+    }
+    #total_row  { font-weight: bold; }
+    .passClass  { background-color: #bdedbc; }
+    .failClass  { background-color: #ffefa4; }
+    .errorClass { background-color: #ffc9c9; }
+    .passCase   { color: #6c6; }
+    .failCase   { color: #FF6600; font-weight: bold; }
+    .errorCase  { color: #c00; font-weight: bold; }
+    .hiddenRow  { display: none; }
+    .testcase   { margin-left: 2em; }
+
+
+    /* -- ending ---------------------------------------------------------------------- */
+    #ending {
+    }
+
+    #div_base {
+                position:absolute;
+                top:0%;
+                left:5%;
+                right:5%;
+                width: auto;
+                height: auto;
+                margin: -15px 0 0 0;
+    }
+</style>
+
+    
+</head>
+<body>
+    <script language="javascript" type="text/javascript"><!--
+    output_list = Array();
+
+    /* level - 0:Summary; 1:Failed; 2:All */
+    function showCase(level) {
+        trs = document.getElementsByTagName("tr");
+        for (var i = 0; i < trs.length; i++) {
+            tr = trs[i];
+            id = tr.id;
+            if (id.substr(0,2) == 'ft') {
+                if (level < 1) {
+                    tr.className = 'hiddenRow';
+                }
+                else {
+                    tr.className = '';
+                }
+            }
+            if (id.substr(0,2) == 'pt') {
+                if (level > 1) {
+                    tr.className = '';
+                }
+                else {
+                    tr.className = 'hiddenRow';
+                }
+            }
+        }
+    }
+
+
+    function showClassDetail(cid, count) {
+        var id_list = Array(count);
+        var toHide = 1;
+        for (var i = 0; i < count; i++) {
+            tid0 = 't' + cid.substr(1) + '.' + (i+1);
+            tid = 'f' + tid0;
+            tr = document.getElementById(tid);
+            if (!tr) {
+                tid = 'p' + tid0;
+                tr = document.getElementById(tid);
+            }
+            id_list[i] = tid;
+            if (tr.className) {
+                toHide = 0;
+            }
+        }
+        for (var i = 0; i < count; i++) {
+            tid = id_list[i];
+            if (toHide) {
+                document.getElementById('div_'+tid).style.display = 'none'
+                document.getElementById(tid).className = 'hiddenRow';
+            }
+            else {
+                document.getElementById(tid).className = '';
+            }
+        }
+    }
+
+
+    function showTestDetail(div_id){
+        var details_div = document.getElementById(div_id)
+        var displayState = details_div.style.display
+        // alert(displayState)
+        if (displayState != 'block' ) {
+            displayState = 'block'
+            details_div.style.display = 'block'
+        }
+        else {
+            details_div.style.display = 'none'
+        }
+    }
+
+
+    function html_escape(s) {
+        s = s.replace(/&/g,'&amp;');
+        s = s.replace(/</g,'&lt;');
+        s = s.replace(/>/g,'&gt;');
+        return s;
+    }
+
+    /* obsoleted by detail in <div>
+    function showOutput(id, name) {
+        var w = window.open("", //url
+                        name,
+                        "resizable,scrollbars,status,width=800,height=450");
+        d = w.document;
+        d.write("<pre>");
+        d.write(html_escape(output_list[id]));
+        d.write("\n");
+        d.write("<a href='javascript:window.close()'>close</a>\n");
+        d.write("</pre>\n");
+        d.close();
+    }
+    */
+    --></script>
+
+    <div id="div_base">
+        
+    <div class='page-header'>
+        <h1>测试报告</h1>
+    <p class='attribute'><strong>开始时间:</strong> 2019-03-26 10:58:14</p>
+<p class='attribute'><strong>运行时长:</strong> 0:00:06.229879</p>
+<p class='attribute'><strong>状态:</strong> 通过 1</p>
+
+    </div>
+    <div style="float: left;width:50%;"><p class='description'>测试报告：</p></div>
+    <div id="chart" style="width:50%;height:400px;float:left;"></div>
+
+        
+    <div class="btn-group btn-group-sm">
+        <button class="btn btn-default" onclick='javascript:showCase(0)'>总结</button>
+        <button class="btn btn-default" onclick='javascript:showCase(1)'>失败</button>
+        <button class="btn btn-default" onclick='javascript:showCase(2)'>全部</button>
+    </div>
+    <p></p>
+    <table id='result_table' class="table table-bordered">
+        <colgroup>
+            <col align='left' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+        </colgroup>
+        <tr id='header_row'>
+            <td>测试套件/测试用例</td>
+            <td>总数</td>
+            <td>通过</td>
+            <td>失败</td>
+            <td>错误</td>
+            <td>查看</td>
+        </tr>
+        
+    <tr class='passClass'>
+        <td>test_GS004_case.Gs004</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c1',1)">详情</a></td>
+    </tr>
+
+<tr id='pt1.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_run</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
+        通过</a>
+
+    <div id='div_pt1.1' class="popup_window">
+        <pre>pt1.1: ['高邑县恒通公路运输有限公司', '张家口市红蔷薇网吧', '东莞市横沥华添毛织有限公司', '乌鲁木齐奇隆永乐国际贸易有限公司', '太原市永恒远商贸有限公司', '昆山点金装饰工程有限公司', '海通证券股份有限公司', '昆明冲斗商贸有限公司', '承德东升恒星科贸有限公司', '湖北鸣发棉花有限公司', '盂县艳霞家电有限公司', '湖南众健鑫贸易有限公司', '嘉定区南翔泰康水产经营部', '重庆市南岸区玲珑日杂商行', '东莞市富益金属有限公司', '上海奥诚机电设备有限公司', '南昌华东锅炉工业设备安装处', '北海金世纪会展服务有限公司', '上海数答信息技术有限公司', '阜宁永成电子元件厂', '丰都县向世凡养殖场', '华电煤业集团有限公司山东分公司', '包头森森商贸有限公司', '南宁佰诗茗贸易有限公司', '东莞速能达网络信息科技有限公司', '华融（天津）贵金属经营有限公司重庆渝中分公司', '大石桥市百合矿业有限公司', '邢台市四华商贸中心', '宁波分个广告传播有限公司', '平邑县山海旅游开发有限公司', '邳州市江北农业发展有限公司', '山东盛邦财富中小企业服务有限公司', '唐山市名远纺织有限公司', '平邑县中泰房地产经纪行', '上海甬久阀门制造有限公司', '茂名市南迦山茶业有限公司', '日照市大勇大药房有限公司莒县二分店', '莒县鸿展纺织有限公司', '武汉凯哲建设工程有限公司', '莒县建鑫房屋拆迁有限公司', '临沂市兰山区佳明汽车服务有限公司', '华电煤业集团有限公司山东分公司', '龙川县登云镇怡平畜牧水产养殖场', '牡丹江市兴隆社会福利实业公司', '黑龙江戈雷机电产品有限公司', '重庆无线电专用设备厂万盛分厂', '扬州秀中文服装店', '肥城恒嘉房产服务有限公司', '北京照见广告有限公司', '丰县海博置业有限公司', '成都吉之瑞投资管理有限公司', '内乡县富民蚕桑专业合作社', '山东巨恒燃料有限公司', '齐齐哈尔市黑龙广告有限公司', '兖州市万佳网络极光连锁店', '重庆道本农业开发有限公司', '东平县利利酱园', '南阳万里达商贸有限责任公司', '荆门洪建置业有限公司', '湖南博晟房地产开发有限公司', '沈阳奥斯威尔食品有限公司', '沈阳远鑫达商贸有限公司', '珠海昊林科技有限公司', '北京索依达商贸有限公司', '上海杰通物流有限公司', '锦州经济技术开发区友鹏电子游戏厅', '云南绚阁装饰设计工程有限公司', '上海诗予梦文化传播有限公司', '大庆皇嘉婚庆有限公司', '禄丰县金山镇农业技术推广中心农业技术咨询服务部', '广西冠腾再生资源有限公司', '赤峰市绿驰商贸有限公司', '肇庆市华苑饮食娱乐有限公司', '上海锦旗商务咨询有限公司', '上海旌姮实业有限公司', '南京安格劳务服务有限公司', '佛山市邓禄普寝具有限公司', '邯郸市鑫帅贸易有限公司', '重庆市綦江区熊伟平面设计工作室', '重庆辉轩贸易有限公司', '成都鑫汇投资管理有限公司', '博野县绿源粮食商贸有限公司', '连云港知阳市政工程有限公司', '赣州凌正贸易有限公司', '株式会社阿特拉西', '德州银鑫棉业有限公司', '上海兆称建材有限公司', '临漳县诚鑫炭业有限公司', '武汉明启工贸有限公司', '沧州市旭然食品有限公司', '泊头市吉跃环保设备有限公司', '上海宣桥印刷厂', '鹰潭市月湖区祥瑞建材经营部', '武汉市吉美日用化妆品批发部', '广西南宁骑福来车业有限公司', '十堰市新汇糖酒副食品有限公司', '滨州市乾汇投资咨询有限公司', '重庆市江津区暖娇建材经营部', '太原市尖草坪区中天宏翔贸易有限公司', '国开精诚（北京）投资基金有限公司', '国开瑞明（北京）投资基金有限公司', '中英益利资产管理股份有限公司']
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%AB%98%E9%82%91%E5%8E%BF%E6%81%92%E9%80%9A%E5%85%AC%E8%B7%AF%E8%BF%90%E8%BE%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528321, 'pripid': 'q78a6360ced0641f5a559245116e718ef', 's_ext_nodenum': None, 'entname': '高邑县恒通公路运输有限公司', 'oriregno': None, 'regno': '130127000003286', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2006, 6, 30), 'opto': datetime.date(2016, 6, 30), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2006, 6, 30), 'apprdate': datetime.date(2011, 5, 30), 'regorg': None, 'entstatus': None, 'regcap': Decimal('30.000000'), 'opscope': '普通货运（道路运输经营许可证有效期至2015年3月27日）；代办货物托运、民用建材、建筑五金的批发、零售。', 'domdistrict': None, 'dom': '高邑县富村镇东塔影村南', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '高邑县工商行政管理局', 'regorg_province': '河北', 'regorg_city': '石家庄市', 'regorg_county': '高邑县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '张乾蕊', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q78a6360ced0641f5a559245116e718ef', 'fr_person_id': 'p_6a615acfe93c49539099620e6904dc9d', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%BC%A0%E5%AE%B6%E5%8F%A3%E5%B8%82%E7%BA%A2%E8%94%B7%E8%96%87%E7%BD%91%E5%90%A7%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528067, 'pripid': 'qf4c3949e11c6493697be2d6b70e38f2e', 's_ext_nodenum': None, 'entname': '张家口市红蔷薇网吧', 'oriregno': None, 'regno': '130702200000861', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2007, 11, 12), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2007, 11, 12), 'apprdate': datetime.date(2011, 7, 5), 'regorg': None, 'entstatus': None, 'regcap': Decimal('20.000000'), 'opscope': '互联网上网服务营业场所（有效期至2012年12月）；零售预包装食品（有效期至2013年8月24日）。', 'domdistrict': None, 'dom': '张家口市胜利中路241号时代广场小区29号楼30-6、7号底商', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 34), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '张家口经济开发区工商行政管理局', 'regorg_province': '河北', 'regorg_city': '张家口市', 'regorg_county': '桥西区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '陈雪', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qf4c3949e11c6493697be2d6b70e38f2e', 'fr_person_id': 'p_92a9e13073b843a5b199d1d0ec442037', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%9C%E8%8E%9E%E5%B8%82%E6%A8%AA%E6%B2%A5%E5%8D%8E%E6%B7%BB%E6%AF%9B%E7%BB%87%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528072, 'pripid': 'q44541dba5eed4b69bd51c93e2844bb68', 's_ext_nodenum': None, 'entname': '东莞市横沥华添毛织有限公司', 'oriregno': None, 'regno': '441900002403280', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 3, 30), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 3, 30), 'apprdate': datetime.date(2015, 3, 30), 'regorg': None, 'entstatus': None, 'regcap': Decimal('100.000000'), 'opscope': '生产、销售：毛织、制衣。', 'domdistrict': None, 'dom': '东莞市横沥镇石涌工业区6栋厂房', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 34), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '广东省东莞市工商行政管理局', 'regorg_province': '广东', 'regorg_city': '东莞市', 'regorg_county': None, 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '曾华阳', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q44541dba5eed4b69bd51c93e2844bb68', 'fr_person_id': 'p_9b234235460a46c6b3a3a41282aadf2c', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%A5%87%E9%9A%86%E6%B0%B8%E4%B9%90%E5%9B%BD%E9%99%85%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528077, 'pripid': 'qb99417d919ec4aeb9bfbd82aec6cf886', 's_ext_nodenum': None, 'entname': '乌鲁木齐奇隆永乐国际贸易有限公司', 'oriregno': None, 'regno': '650103050071985', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2011, 3, 7), 'opto': datetime.date(2021, 3, 6), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2011, 3, 7), 'apprdate': datetime.date(2017, 6, 24), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '许可经营项目：无。一般经营项目：销售：玩具；翻译，商务服务；货物与技术的进出口业务。', 'domdistrict': None, 'dom': '新疆乌鲁木齐市沙依巴克区西北路1241号1栋2单元202室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 26, 10, 5, 56), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '乌鲁木齐市沙依巴克区市场监督管理局', 'regorg_province': '新疆', 'regorg_city': '乌鲁木齐市', 'regorg_county': '沙依巴克区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '张如对', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qb99417d919ec4aeb9bfbd82aec6cf886', 'fr_person_id': 'p_bb0bbf6e69654c79918b83eaf2265c12', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%A4%AA%E5%8E%9F%E5%B8%82%E6%B0%B8%E6%81%92%E8%BF%9C%E5%95%86%E8%B4%B8%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528333, 'pripid': 'q3a47a851d3fd405e9e784675815e70bc', 's_ext_nodenum': None, 'entname': '太原市永恒远商贸有限公司', 'oriregno': None, 'regno': '140106061012134', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 4, 21), 'opto': datetime.date(2035, 4, 20), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 4, 21), 'apprdate': datetime.date(2017, 6, 15), 'regorg': None, 'entstatus': None, 'regcap': Decimal('500.000000'), 'opscope': '用品、家用电器、电子产品、劳保用品（不含特殊劳保）、办公用品、文化用品、化妆品、服装、鞋帽、皮具、箱包、工艺品（不含文物）、五金交电、化工产品（不含危险品）、通讯器材、计算机软硬件及耗材的销售。（依法须经批准的项目，经相关部门批准后方可开展经营活动。）***', 'domdistrict': None, 'dom': '太原市迎泽区大铁匠巷28号2幢（凯旋大地）F单元3层302室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 6), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '太原市工商行政管理局迎泽分局', 'regorg_province': '山西', 'regorg_city': '太原市', 'regorg_county': '迎泽区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '0.0', 'entstatus_name': '在营（开业）', 'frname': '谢淑梅', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q3a47a851d3fd405e9e784675815e70bc', 'fr_person_id': 'p_0a156590248247228437057cfcee9b47', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%98%86%E5%B1%B1%E7%82%B9%E9%87%91%E8%A3%85%E9%A5%B0%E5%B7%A5%E7%A8%8B%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528335, 'pripid': 'q608f26475290468aaa46b543c6db64e4', 's_ext_nodenum': None, 'entname': '昆山点金装饰工程有限公司', 'oriregno': None, 'regno': '320583000108344', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2005, 7, 13), 'opto': datetime.date(2025, 7, 13), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2005, 7, 13), 'apprdate': datetime.date(2005, 7, 13), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '室内装潢、装饰施工；水电、空调安装。（涉及资质管理、许可经营的凭相应资质、许可证经营）', 'domdistrict': None, 'dom': '昆山开发区锦华园1号楼202室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 6), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '昆山市市场监督管理局', 'regorg_province': '江苏', 'regorg_city': '苏州市', 'regorg_county': '昆山市', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '宋增勇', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q608f26475290468aaa46b543c6db64e4', 'fr_person_id': 'p_5221f0e5acbb4f9996cfeceb9289ff93', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%B5%B7%E9%80%9A%E8%AF%81%E5%88%B8%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 5398465, 'pripid': '310000000011993020200096', 's_ext_nodenum': '310000', 'entname': '海通证券股份有限公司', 'oriregno': None, 'regno': '310000000016182', 'enttype': '1219', 'ppripid': None, 'pentname': None, 'industryphy': 'J', 'industryco': '6712', 'opfrom': datetime.date(1993, 2, 2), 'opto': datetime.date(9999, 12, 31), 'postalcode': '200011', 'tel': '53594567', 'email': 'haitong@htsec.com', 'esdate': datetime.date(1993, 2, 2), 'apprdate': datetime.date(1993, 2, 2), 'regorg': '310000', 'entstatus': '1', 'regcap': Decimal('1150170.000000'), 'opscope': '证券经纪；证券自营；证券承销与保荐；证券投资咨询；与证券交易、证券投资活动有关的财务顾问；直接投资业务；证券投资基金代销；为期货公司提供中间介绍业务；融资融券业务；代销金融产品；股票期权做市业务；中国证监会批准的其他业务，公司可以对外投资设立子公司从事金融产品等投资业务。 【依法须经批准的项目，经相关部门批准后方可开展经营活动】', 'domdistrict': '310101', 'dom': '上海市广东路689号', 'reccap': Decimal('958472.118000'), 'regcapcur': '156', 's_ext_timestamp': datetime.datetime(2019, 1, 29, 9, 57, 28), 'enttype_name': '其他股份有限公司（上市）', 'industryphy_name': '金融业', 'industryco_name': '证券经纪交易服务', 'regorg_name': '上海市工商行政管理局', 'regorg_province': '上海', 'regorg_city': '上海市', 'regorg_county': '黄浦区', 'credit_code': '9131000013220921X6', 'org_code': '13220921X', 'regcapcur_name': '人民币', 'share_ratio': '83.333083', 'entstatus_name': '在营（开业）', 'frname': '周杰', 'fr_cerno': '8b8bc354654e38188ba8e099bc474fcd4b4e7d9a79be9125cd8725fb8df12bf5', 'fr_cerno_aes': '50AEBDC624A486123663F53908D0D2AD8FAFF43C8B99F7FCBD3EA87F06E3CEB9', 'candate': None, 'revdate': None, 'eid': 'q3031354fa18190672b772816d50b38a1', 'fr_person_id': 'p_9b2ce29ab31825b649e1f9c36d70016c', 'pid_reliability': Decimal('0.0000'), 'lng': Decimal('121.4852906977987700'), 'lat': Decimal('31.2367839974400180'), 'revcan_rea': None, 'loc_exact': 1, 'street': None, 'park': None}
+{'id': 56177, 'eid': 'q3031354fa18190672b772816d50b38a1', 'taxpayer_id': '31010113220921X', 'ent_name': '海通证券股份有限公司', 'reg_no': '310000000016182', 'credit_code': '9131000013220921X6', 'year': '2015', 'level': 'A', 'taxcode': 310000, 'create_time': datetime.datetime(2018, 5, 2, 10, 27, 13)}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%98%86%E6%98%8E%E5%86%B2%E6%96%97%E5%95%86%E8%B4%B8%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528337, 'pripid': 'qd36cb6b5bb1143b081207a4f6c60b358', 's_ext_nodenum': None, 'entname': '昆明冲斗商贸有限公司', 'oriregno': None, 'regno': '530111000298758', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 4, 13), 'opto': datetime.date(2035, 4, 12), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 4, 13), 'apprdate': datetime.date(2015, 4, 13), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '国内贸易、物资供销（依法须经批准的项目，经相关部门批准后方可开展经营活动）', 'domdistrict': None, 'dom': '云南省昆明市官渡区同兴综合市场二期1-2幢3单元601号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 6), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '官渡区市场监督管理局', 'regorg_province': '云南', 'regorg_city': '昆明市', 'regorg_county': '官渡区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '蒋建成', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qd36cb6b5bb1143b081207a4f6c60b358', 'fr_person_id': 'p_e669d7263ecc4e9caa47a5003c68d83b', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%89%BF%E5%BE%B7%E4%B8%9C%E5%8D%87%E6%81%92%E6%98%9F%E7%A7%91%E8%B4%B8%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528338, 'pripid': 'qf2cac0aaf7354ec394bbc1c0daa31cd6', 's_ext_nodenum': None, 'entname': '承德东升恒星科贸有限公司', 'oriregno': None, 'regno': '130800000022115', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2008, 3, 25), 'opto': datetime.date(2028, 3, 24), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2008, 3, 25), 'apprdate': datetime.date(2008, 3, 25), 'regorg': None, 'entstatus': None, 'regcap': Decimal('30.000000'), 'opscope': '计算机、耗材及辅助设备；计算机系统服务。', 'domdistrict': None, 'dom': '承德双桥区文化大厦南三层43-1号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 6), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '承德市双桥区市场监督管理局', 'regorg_province': '河北', 'regorg_city': '承德市', 'regorg_county': '双桥区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '邹卫东', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qf2cac0aaf7354ec394bbc1c0daa31cd6', 'fr_person_id': 'p_3051ad4217174842aad210b5f07799e6', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%B9%96%E5%8C%97%E9%B8%A3%E5%8F%91%E6%A3%89%E8%8A%B1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528085, 'pripid': 'q479f10d0d3c2454394b7303f006e7417', 's_ext_nodenum': None, 'entname': '湖北鸣发棉花有限公司', 'oriregno': None, 'regno': '429004000043544', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 11, 2), 'opto': datetime.date(2050, 11, 1), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 11, 2), 'apprdate': datetime.date(2010, 11, 19), 'regorg': None, 'entstatus': None, 'regcap': Decimal('100.000000'), 'opscope': '棉絮、棉纱、坯布的加工与销售；棉花的收购与销售。', 'domdistrict': None, 'dom': '仙桃市三伏潭镇振兴路（供销社宿舍）', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 36), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '仙桃市工商行政管理局', 'regorg_province': '湖北', 'regorg_city': '省辖县', 'regorg_county': '仙桃市', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '雷鸣', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q479f10d0d3c2454394b7303f006e7417', 'fr_person_id': 'p_b934b1b1f5454a14ba6877494494fa81', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E7%9B%82%E5%8E%BF%E8%89%B3%E9%9C%9E%E5%AE%B6%E7%94%B5%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528341, 'pripid': 'qaabae92b0241440289a28d93d064a05b', 's_ext_nodenum': None, 'entname': '盂县艳霞家电有限公司', 'oriregno': None, 'regno': '140322200006270', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 3, 22), 'opto': datetime.date(2014, 3, 21), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 3, 22), 'apprdate': datetime.date(2010, 3, 22), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '**批发零售:家用电器、家具（法律法规禁止经营的不得经营；涉及行政许可的项目除外）**', 'domdistrict': None, 'dom': '阳泉盂县秀水东街', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 6), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '盂县市场监督管理局', 'regorg_province': '山西', 'regorg_city': '阳泉市', 'regorg_county': '盂县', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '黄艳霞', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qaabae92b0241440289a28d93d064a05b', 'fr_person_id': 'p_14a2d0820e934f81a89b43b87a38eb84', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%B9%96%E5%8D%97%E4%BC%97%E5%81%A5%E9%91%AB%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528343, 'pripid': 'q29bd2dea26fd41248f0b882a35a9db9a', 's_ext_nodenum': None, 'entname': '湖南众健鑫贸易有限公司', 'oriregno': None, 'regno': '430100000175807', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2013, 7, 25), 'opto': datetime.date(2063, 7, 24), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2013, 7, 25), 'apprdate': datetime.date(2013, 12, 10), 'regorg': None, 'entstatus': None, 'regcap': Decimal('1000.000000'), 'opscope': 'II类医疗器械（含6840体外诊断试剂）、III类医疗器械：6815注射穿刺器械，6821医用电子仪器设备（不含心脏起博器），6822医用光学器具、仪器及内窥镜设备，6823医用超声仪器及有关设备，6824医用激光仪器设备，6825医用高频仪器设备，6826物理治疗设备，6828医用磁共振设备，6830医用X射线设备，6832医用高能射线设备，6833医用核素设备，6840临床检验分析仪器，6845体外循环及血液处理设备，6846植入材料和人工器官，6854手术室、急救室、诊疗室设备及器具，6864医用卫生材料及敷料，6865医用缝合材料及粘合剂，6866医用高分子材料及制品，6870软件，6877介入器材的销售（医疗器械经营企业许可证许可期限至2018年12月8日）五金交电、电子产品（不含电子出版物）、机电设备、国家法律法规允许的金属材料和矿产品、工艺品、电线电缆、化工产品（不含危险化学品和监控品）、初级农副产品、仪器仪表及配件、实验设备、教学设备、计算机软硬件的销售。（涉及行政许可的凭许可证经营）', 'domdistrict': None, 'dom': '长沙高新开发区麓谷大道627号新长海麓谷中心B-2栋车间4楼405号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 6), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '长沙市工商行政管理局高新技术产业开发区分局', 'regorg_province': '湖南', 'regorg_city': '长沙市', 'regorg_county': '长沙县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '郭华容', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q29bd2dea26fd41248f0b882a35a9db9a', 'fr_person_id': 'p_317d93ecf49544bfa5ac681ad0b6ceb9', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%98%89%E5%AE%9A%E5%8C%BA%E5%8D%97%E7%BF%94%E6%B3%B0%E5%BA%B7%E6%B0%B4%E4%BA%A7%E7%BB%8F%E8%90%A5%E9%83%A8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528344, 'pripid': 'q88690b7889f443efa1b3b85b1e292a3e', 's_ext_nodenum': None, 'entname': '嘉定区南翔泰康水产经营部', 'oriregno': None, 'regno': '3101141006650', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(1992, 11, 13), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1992, 11, 13), 'apprdate': datetime.date(1992, 11, 13), 'regorg': None, 'entstatus': None, 'regcap': Decimal('30.000000'), 'opscope': '水产品，肉及制品，禽蛋制品，蔬菜，糖，烟，酒，杂货，饮食服务，冷饮，饮料', 'domdistrict': None, 'dom': '嘉定区南翔镇老翔黄路', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 6), 'enttype_name': '集体所有制', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '嘉定区市场监管局', 'regorg_province': '上海', 'regorg_city': '上海市', 'regorg_county': '嘉定区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '陆菊芳', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q88690b7889f443efa1b3b85b1e292a3e', 'fr_person_id': 'p_feda56537f274420a9cafb99c2440389', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%87%8D%E5%BA%86%E5%B8%82%E5%8D%97%E5%B2%B8%E5%8C%BA%E7%8E%B2%E7%8F%91%E6%97%A5%E6%9D%82%E5%95%86%E8%A1%8C%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528091, 'pripid': 'q7ac0ab1efbc04ddcaf8b1c14cdd4ae1c', 's_ext_nodenum': None, 'entname': '重庆市南岸区玲珑日杂商行', 'oriregno': None, 'regno': '500108300017895', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(1994, 3, 14), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1994, 3, 14), 'apprdate': datetime.date(2012, 4, 25), 'regorg': None, 'entstatus': None, 'regcap': Decimal('2.000000'), 'opscope': '日用杂货、日用陶瓷、卫生陶瓷、建筑材料、五金、交电、化工（不含化学危险品）、电线、电缆。钢材、通用零部件、百货、办公用品。', 'domdistrict': None, 'dom': '重庆市南岸区上新街55号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 37), 'enttype_name': '集体经济', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '重庆市工商行政管理局南岸区分局', 'regorg_province': '重庆', 'regorg_city': '重庆市', 'regorg_county': '南岸区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '罗念渝', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q7ac0ab1efbc04ddcaf8b1c14cdd4ae1c', 'fr_person_id': 'p_25358999adea43f0a1fba5b1d773b4c2', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%9C%E8%8E%9E%E5%B8%82%E5%AF%8C%E7%9B%8A%E9%87%91%E5%B1%9E%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528094, 'pripid': 'q6bbd243a9c8748cda0b645c5e9e06bbd', 's_ext_nodenum': None, 'entname': '东莞市富益金属有限公司', 'oriregno': None, 'regno': '441900000930510', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 11, 10), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 11, 10), 'apprdate': datetime.date(2010, 11, 10), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '销售：有色金属制品（法律、行政法规及国务院决定禁止或者规定须取得许可证后方可经营的项目除外）。', 'domdistrict': None, 'dom': '东莞市万江区水蛇涌社区教育路1号302房', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 37), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '广东省东莞市工商行政管理局', 'regorg_province': '广东', 'regorg_city': '东莞市', 'regorg_county': None, 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '吴日贵', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q6bbd243a9c8748cda0b645c5e9e06bbd', 'fr_person_id': 'p_0fd8e7776ea44e33b02161b984d284a9', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%8A%E6%B5%B7%E5%A5%A5%E8%AF%9A%E6%9C%BA%E7%94%B5%E8%AE%BE%E5%A4%87%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528350, 'pripid': 'qe13a42fdb2ad404f83403796c726cc19', 's_ext_nodenum': None, 'entname': '上海奥诚机电设备有限公司', 'oriregno': None, 'regno': '310114000796207', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2003, 9, 24), 'opto': datetime.date(2023, 9, 23), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2003, 9, 24), 'apprdate': datetime.date(2003, 9, 24), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '五金交电、机电设备、机械设备、电缆电线、建筑装潢材料、钢材、木材、包装材料、化工原料及产品（除危险化学品、监控化学品、烟花爆竹、民用爆炸物品、易制毒化学品）、仪器仪表、橡塑制品、模具、洁具、日用百货、苗木的销售，绿化工程。【依法须经批准的项目，经相关部门批准后方可开展经营活动】', 'domdistrict': None, 'dom': '嘉定区宝安公路2889号2幢A2967室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 6), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '嘉定区市场监管局', 'regorg_province': '上海', 'regorg_city': '上海市', 'regorg_county': '嘉定区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '周肇', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qe13a42fdb2ad404f83403796c726cc19', 'fr_person_id': 'p_ca78a65846cd4210a38bd41c681c5a94', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8D%97%E6%98%8C%E5%8D%8E%E4%B8%9C%E9%94%85%E7%82%89%E5%B7%A5%E4%B8%9A%E8%AE%BE%E5%A4%87%E5%AE%89%E8%A3%85%E5%A4%84%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528095, 'pripid': 'qa6ffb2271ca34627a4a993421930506b', 's_ext_nodenum': None, 'entname': '南昌华东锅炉工业设备安装处', 'oriregno': None, 'regno': '360111010003552', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(1988, 9, 17), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1988, 9, 17), 'apprdate': datetime.date(1988, 9, 17), 'regorg': None, 'entstatus': None, 'regcap': Decimal('28.000000'), 'opscope': '锅炉、容器、机械设备安装及修理**', 'domdistrict': None, 'dom': '江西省南昌市东湖区福州路392号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 37), 'enttype_name': '集体所有制', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '南昌市青山湖区市场和质量监督管理局', 'regorg_province': '江西', 'regorg_city': '南昌市', 'regorg_county': '青山湖区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '韩瑞凤', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qa6ffb2271ca34627a4a993421930506b', 'fr_person_id': 'p_91102d006bf644df87f5ca13d9f60b56', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8C%97%E6%B5%B7%E9%87%91%E4%B8%96%E7%BA%AA%E4%BC%9A%E5%B1%95%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528351, 'pripid': 'q3f9d24ce870c47649148d65abba1ffbf', 's_ext_nodenum': None, 'entname': '北海金世纪会展服务有限公司', 'oriregno': None, 'regno': '450500200003369', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2008, 3, 10), 'opto': datetime.date(2028, 3, 9), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2008, 3, 10), 'apprdate': datetime.date(2010, 3, 18), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '承办各行业学术交流、会议展览、礼仪庆典策划及相关服务、商务咨询服务。', 'domdistrict': None, 'dom': '北海市北部湾东路９２号东盛美景６栋２单元３０２室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 6), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '北海市工商行政管理局', 'regorg_province': '广西', 'regorg_city': '北海市', 'regorg_county': None, 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '顾瑛', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q3f9d24ce870c47649148d65abba1ffbf', 'fr_person_id': 'p_ddcd9c4eb6924f79a6ca3eb7b3c568e4', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%8A%E6%B5%B7%E6%95%B0%E7%AD%94%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528097, 'pripid': 'q8b225182934640858b541e4ca4a595b3', 's_ext_nodenum': None, 'entname': '上海数答信息技术有限公司', 'oriregno': None, 'regno': '310113001188833', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2014, 6, 28), 'opto': datetime.date(2024, 6, 27), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2014, 6, 28), 'apprdate': datetime.date(2014, 6, 28), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '在信息科技领域内从事技术开发、技术转让、技术咨询、技术服务；软件开发。【依法须经批准的项目，经相关部门批准后方可开展经营活动】', 'domdistrict': None, 'dom': '上海市宝山区上大路668号1177室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 37), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '宝山区市场监督管理局', 'regorg_province': '上海', 'regorg_city': '上海市', 'regorg_county': '宝山区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '王答明', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q8b225182934640858b541e4ca4a595b3', 'fr_person_id': 'p_1b7eb77ce6914c7a8d6cce7d96daa965', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%98%9C%E5%AE%81%E6%B0%B8%E6%88%90%E7%94%B5%E5%AD%90%E5%85%83%E4%BB%B6%E5%8E%82%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528100, 'pripid': 'q29f466608cdc4e41a96ec0d64618bf05', 's_ext_nodenum': None, 'entname': '阜宁永成电子元件厂', 'oriregno': None, 'regno': '320923000187667', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2013, 3, 25), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2013, 3, 25), 'apprdate': datetime.date(2013, 3, 25), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '许可经营范围:一般经营范围:电子元件加工。', 'domdistrict': None, 'dom': '阜宁县阜城镇施庄社区通榆路8号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 38), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '阜宁县市场监督管理局', 'regorg_province': '江苏', 'regorg_city': '盐城市', 'regorg_county': '阜宁县', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '丁孝成', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q29f466608cdc4e41a96ec0d64618bf05', 'fr_person_id': 'p_04605773e77847c4a40db474a8e80dad', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%B0%E9%83%BD%E5%8E%BF%E5%90%91%E4%B8%96%E5%87%A1%E5%85%BB%E6%AE%96%E5%9C%BA%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528101, 'pripid': 'q8b3e5e15ef7744b181a3135b33aeaa4a', 's_ext_nodenum': None, 'entname': '丰都县向世凡养殖场', 'oriregno': None, 'regno': '500230200005472', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2011, 4, 21), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2011, 4, 21), 'apprdate': datetime.date(2011, 4, 21), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '肉牛养殖、销售（有效期至2011年7月17日）*****', 'domdistrict': None, 'dom': '重庆市丰都县南天湖镇犁地坪村六社', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 38), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '重庆市丰都县工商行政管理局', 'regorg_province': '重庆', 'regorg_city': '重庆市', 'regorg_county': '丰都县', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '向世凡', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q8b3e5e15ef7744b181a3135b33aeaa4a', 'fr_person_id': 'p_6877dd2e9db44bd7a11b035cd538d993', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8D%8E%E7%94%B5%E7%85%A4%E4%B8%9A%E9%9B%86%E5%9B%A2%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E5%B1%B1%E4%B8%9C%E5%88%86%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528357, 'pripid': 'q9bb616365a5f4ac09fd4f8ec30b6bc78', 's_ext_nodenum': None, 'entname': '华电煤业集团有限公司山东分公司', 'oriregno': None, 'regno': '91370103787413473F', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2006, 4, 29), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2006, 4, 29), 'apprdate': datetime.date(2011, 6, 27), 'regorg': None, 'entstatus': None, 'regcap': Decimal('0.000000'), 'opscope': '许可经营项目：一般经营项目：受本公司委托开展电力工程建设与监理；经济信息咨询。(未取得专项许可的项目除外)', 'domdistrict': None, 'dom': '济南市市中区经三路14号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48), 'enttype_name': '内资分公司', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '济南市市中区市场监督管理局', 'regorg_province': '山东', 'regorg_city': '济南市', 'regorg_county': '市中区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '郑鹏', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q9bb616365a5f4ac09fd4f8ec30b6bc78', 'fr_person_id': 'p_cac68873977a47d6928e7946fecc658c', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8C%85%E5%A4%B4%E6%A3%AE%E6%A3%AE%E5%95%86%E8%B4%B8%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527846, 'pripid': 'q14b32f5bf7a84d7a869f274548215306', 's_ext_nodenum': None, 'entname': '包头森森商贸有限公司', 'oriregno': None, 'regno': '150208000022581', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 8, 19), 'opto': datetime.date(2020, 8, 18), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 8, 19), 'apprdate': datetime.date(2019, 2, 11), 'regorg': None, 'entstatus': None, 'regcap': Decimal('3.000000'), 'opscope': '许可经营项目：一般经营项目：金属类、建筑材料、通讯产品、电子产品、装饰材料、苗木的销售。（国家法律法规规定应经审批的未获审批前不得经营）', 'domdistrict': None, 'dom': '内蒙古自治区包头市稀土开发区曹欣小区３栋２单元２３号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 4, 11, 19, 41), 'enttype_name': '有限责任公司（自然人投资或控股）（1130）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '包头稀土高新技术产业开发区食品药品监督和工商行政管理局', 'regorg_province': '内蒙古', 'regorg_city': '包头市', 'regorg_county': None, 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '注销', 'frname': '罗寿博', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': datetime.date(2019, 2, 11), 'revdate': None, 'eid': 'q14b32f5bf7a84d7a869f274548215306', 'fr_person_id': 'p_62f3d8b353254636955c0daafb5bb1bb', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': '被吊销营业执照', 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8D%97%E5%AE%81%E4%BD%B0%E8%AF%97%E8%8C%97%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528105, 'pripid': 'q00c46593d6c2414690405fdf16923440', 's_ext_nodenum': None, 'entname': '南宁佰诗茗贸易有限公司', 'oriregno': None, 'regno': '450108000101876', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2013, 5, 13), 'opto': datetime.date(2033, 5, 13), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2013, 5, 13), 'apprdate': datetime.date(2016, 6, 23), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '批发零售：化妆品、日用品、美发用品、纺织品、皮革制品、服装服饰。', 'domdistrict': None, 'dom': '南宁市良庆区大沙田建新路三街42号一楼', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 1), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '南宁市良庆区工商行政管理局', 'regorg_province': '广西', 'regorg_city': '南宁市', 'regorg_county': '良庆区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '钟静华', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q00c46593d6c2414690405fdf16923440', 'fr_person_id': 'p_8a731e904682407993a89c18ddffe6ff', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%9C%E8%8E%9E%E9%80%9F%E8%83%BD%E8%BE%BE%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528107, 'pripid': 'qd1c01ad7256244eb9536a818e5ee8897', 's_ext_nodenum': None, 'entname': '东莞速能达网络信息科技有限公司', 'oriregno': None, 'regno': '441900001903549', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2014, 4, 3), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2014, 4, 3), 'apprdate': datetime.date(2014, 4, 3), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '网络技术咨询服务；计算机软件、硬件销售；二维码产品的研发和销售；企业管理咨询。', 'domdistrict': None, 'dom': '东莞市莞城博厦九坊森晖古玩城三楼K8号铺', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 1), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '广东省东莞市工商行政管理局', 'regorg_province': '广东', 'regorg_city': '东莞市', 'regorg_county': None, 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '叶彦飞', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qd1c01ad7256244eb9536a818e5ee8897', 'fr_person_id': 'p_1c9b6b559bcd4fc99d7253ed501d1184', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8D%8E%E8%9E%8D%EF%BC%88%E5%A4%A9%E6%B4%A5%EF%BC%89%E8%B4%B5%E9%87%91%E5%B1%9E%E7%BB%8F%E8%90%A5%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E9%87%8D%E5%BA%86%E6%B8%9D%E4%B8%AD%E5%88%86%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527854, 'pripid': 'qc38175ead6bc4cb794c8788ddc434396', 's_ext_nodenum': None, 'entname': '华融（天津）贵金属经营有限公司重庆渝中分公司', 'oriregno': None, 'regno': '500103300095124', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2014, 1, 14), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2014, 1, 14), 'apprdate': datetime.date(2014, 1, 14), 'regorg': None, 'entstatus': None, 'regcap': Decimal('0.000000'), 'opscope': '销售金银饰品、金属材料（不含稀贵金属）；投资咨询（不得从事银行、证劵、保险等需要取得许可或审批的金融业务）。『以上范围法律、法规、国务院决定禁止经营的不得经营；法律、法规、国务院决定规定应经审批而未获审批前不得经营』★★', 'domdistrict': None, 'dom': '重庆市渝中区中华路178号7-2', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 6, 9, 13, 11), 'enttype_name': '分公司', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '重庆市工商行政管理局渝中区分局', 'regorg_province': '重庆', 'regorg_city': '重庆市', 'regorg_county': '渝中区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': None, 'entstatus_name': '吊销', 'frname': '傅盛辉', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qc38175ead6bc4cb794c8788ddc434396', 'fr_person_id': 'p_a648e1c4f66c4d2cab41500fa9b1f6c0', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%A4%A7%E7%9F%B3%E6%A1%A5%E5%B8%82%E7%99%BE%E5%90%88%E7%9F%BF%E4%B8%9A%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528112, 'pripid': 'q871cc03f6bd84cf09b1ef58e9e687bf0', 's_ext_nodenum': None, 'entname': '大石桥市百合矿业有限公司', 'oriregno': None, 'regno': '210882004029895', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 6, 12), 'opto': datetime.date(2020, 6, 12), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 6, 12), 'apprdate': datetime.date(2011, 8, 17), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '耐火材料、矿产品销售、委托加工；金属材料、钢材销售；水处理设备制造；机械设备销售。', 'domdistrict': None, 'dom': '大石桥市石佛镇石佛村', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 1), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '大石桥市市场监督管理局', 'regorg_province': '辽宁', 'regorg_city': '营口市', 'regorg_county': '大石桥市', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '赵广学', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q871cc03f6bd84cf09b1ef58e9e687bf0', 'fr_person_id': 'p_cc804c3e0f494e78afe839031452cc16', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%82%A2%E5%8F%B0%E5%B8%82%E5%9B%9B%E5%8D%8E%E5%95%86%E8%B4%B8%E4%B8%AD%E5%BF%83%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528114, 'pripid': 'q93cc63bace2b4a71a7600edcf27e6e4d', 's_ext_nodenum': None, 'entname': '邢台市四华商贸中心', 'oriregno': None, 'regno': '130503200006299', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2012, 12, 24), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2012, 12, 24), 'apprdate': datetime.date(2012, 12, 24), 'regorg': None, 'entstatus': None, 'regcap': Decimal('5.000000'), 'opscope': '批发零售：家用电器、计算机、软件及辅助设备', 'domdistrict': None, 'dom': '邢台市桥西区冶金北路229锦苑公寓1号楼5层2单元506', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 1), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '桥西区市场监督管理局', 'regorg_province': '河北', 'regorg_city': '石家庄市', 'regorg_county': '桥西区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '龙四花', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q93cc63bace2b4a71a7600edcf27e6e4d', 'fr_person_id': 'p_e7d0d45f06304658ad8c6579c3fa81c3', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%AE%81%E6%B3%A2%E5%88%86%E4%B8%AA%E5%B9%BF%E5%91%8A%E4%BC%A0%E6%92%AD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527864, 'pripid': 'q5d8a9a7b56314adcba490cadccc880ad', 's_ext_nodenum': None, 'entname': '宁波分个广告传播有限公司', 'oriregno': None, 'regno': '330216000018793', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2014, 11, 17), 'opto': datetime.date(2024, 11, 16), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2014, 11, 17), 'apprdate': datetime.date(2016, 8, 5), 'regorg': None, 'entstatus': None, 'regcap': Decimal('1000.000000'), 'opscope': '设计、制作、代理、发布各类广告；企业形象策划；展览展示服务；互联网信息服务；网络技术、通讯技术的开发，计算机软硬件的设计、开发、制作、批发、零售（除计算机信息系统安全专用产品），系统集成，并提供相关的技术咨询、技术转让、技术开发、技术服务。', 'domdistrict': None, 'dom': '宁波大榭开发区永丰路128号36幢111室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 6, 16, 34, 46), 'enttype_name': '其他有限责任公司', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '宁波市市场监督管理局大榭开发区分局', 'regorg_province': '浙江', 'regorg_city': '宁波市', 'regorg_county': '鄞州区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '0.0', 'entstatus_name': '注销', 'frname': '丁晓静', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q5d8a9a7b56314adcba490cadccc880ad', 'fr_person_id': 'p_752343b22f144421800f75704645f9ab', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%B9%B3%E9%82%91%E5%8E%BF%E5%B1%B1%E6%B5%B7%E6%97%85%E6%B8%B8%E5%BC%80%E5%8F%91%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527866, 'pripid': 'q4a8d199c4d2f47a480c79b62beb53ef4', 's_ext_nodenum': None, 'entname': '平邑县山海旅游开发有限公司', 'oriregno': None, 'regno': '371326200008324', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2012, 5, 16), 'opto': datetime.date(2016, 5, 16), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2012, 5, 16), 'apprdate': datetime.date(2012, 5, 16), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '旅游项目开发，旅游服务（不含旅行社业务）；基础设施建设；工艺品、地产中药材（不含甘草、杜仲、厚朴、麻黄草）土特产销售。（需许可经营的，须凭许可证、资质证经营）(依法须经批准的项目，经相关部门批准后方可开展经营活动)。', 'domdistrict': None, 'dom': '山东省临沂市平邑县柏林镇柏林村', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '临沂蒙山旅游度假区市场监督管理局', 'regorg_province': '山东', 'regorg_city': '临沂市', 'regorg_county': '平邑县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '秦绪强', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q4a8d199c4d2f47a480c79b62beb53ef4', 'fr_person_id': 'p_8ef898ccb233408a9dc103d65038451d', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%82%B3%E5%B7%9E%E5%B8%82%E6%B1%9F%E5%8C%97%E5%86%9C%E4%B8%9A%E5%8F%91%E5%B1%95%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528122, 'pripid': 'qee5293de132245fb8a97fa25d0002a04', 's_ext_nodenum': None, 'entname': '邳州市江北农业发展有限公司', 'oriregno': None, 'regno': '320382000105724', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2013, 7, 8), 'opto': datetime.date(2033, 7, 7), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2013, 7, 8), 'apprdate': datetime.date(2013, 7, 8), 'regorg': None, 'entstatus': None, 'regcap': Decimal('116.000000'), 'opscope': '许可经营范围:一般经营范围:花卉、苗木、豆类、谷物、香料作物、食用菌、水果、蔬菜种植、批发、零售。', 'domdistrict': None, 'dom': '邳州市炮车镇青年东路', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 1), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '邳州市市场监督管理局', 'regorg_province': '江苏', 'regorg_city': '徐州市', 'regorg_county': '邳州市', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '苏雷', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qee5293de132245fb8a97fa25d0002a04', 'fr_person_id': 'p_f9b7aca69c254a8ab5c388ca21f4b09b', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%B1%B1%E4%B8%9C%E7%9B%9B%E9%82%A6%E8%B4%A2%E5%AF%8C%E4%B8%AD%E5%B0%8F%E4%BC%81%E4%B8%9A%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527867, 'pripid': 'qed5f26101940426cbf82762a8251e9a9', 's_ext_nodenum': None, 'entname': '山东盛邦财富中小企业服务有限公司', 'oriregno': None, 'regno': '370100200212287', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2014, 4, 8), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2014, 4, 8), 'apprdate': datetime.date(2015, 8, 19), 'regorg': None, 'entstatus': None, 'regcap': Decimal('300.000000'), 'opscope': '企业管理咨询；经济贸易咨询；受金融机构委托从事金融信息技术的外包服务；投资咨询（不含期货、证券及金融咨询）。(依法须经批准的项目，经相关部门批准后方可开展经营活动)', 'domdistrict': None, 'dom': '济南市市中区舜耕路217号九城尚都办公楼1120室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '济南市市中区市场监督管理局', 'regorg_province': '山东', 'regorg_city': '济南市', 'regorg_county': '市中区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '卞勇', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qed5f26101940426cbf82762a8251e9a9', 'fr_person_id': 'p_25874838ab834089802ef19f551695b6', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%94%90%E5%B1%B1%E5%B8%82%E5%90%8D%E8%BF%9C%E7%BA%BA%E7%BB%87%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528123, 'pripid': 'qbdbf2c3d174a43deb0296b3e3121030a', 's_ext_nodenum': None, 'entname': '唐山市名远纺织有限公司', 'oriregno': None, 'regno': '130282000003887', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2006, 4, 5), 'opto': datetime.date(2016, 4, 5), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2006, 4, 5), 'apprdate': datetime.date(2014, 5, 12), 'regorg': None, 'entstatus': None, 'regcap': Decimal('80.000000'), 'opscope': '纺纱、织布；棉花贸易行纪代理、棉花收购、被服棉加工（排污许可证有效期至2014年9月30日）*', 'domdistrict': None, 'dom': '唐山丰南区南孙庄乡杨英庄村南', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 1), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '丰南区工商行政管理局', 'regorg_province': '河北', 'regorg_city': '唐山市', 'regorg_county': '丰南区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '刘金萍', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qbdbf2c3d174a43deb0296b3e3121030a', 'fr_person_id': 'p_4152eba245f84ab2ad8ee160d8164b18', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%B9%B3%E9%82%91%E5%8E%BF%E4%B8%AD%E6%B3%B0%E6%88%BF%E5%9C%B0%E4%BA%A7%E7%BB%8F%E7%BA%AA%E8%A1%8C%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527868, 'pripid': 'qaf53a4f8c39f40ed84a39173a31f7417', 's_ext_nodenum': None, 'entname': '平邑县中泰房地产经纪行', 'oriregno': None, 'regno': '371326300002451', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2011, 2, 23), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2011, 2, 23), 'apprdate': datetime.date(2011, 2, 23), 'regorg': None, 'entstatus': None, 'regcap': Decimal('30.000000'), 'opscope': '房地产项目咨询，代理，租赁服务；房产销售服务', 'domdistrict': None, 'dom': '平邑县城金都大道中段北侧', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 6, 17, 22, 7), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '平邑县工商行政管理局', 'regorg_province': '山东', 'regorg_city': '临沂市', 'regorg_county': '平邑县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '赵伟', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qaf53a4f8c39f40ed84a39173a31f7417', 'fr_person_id': 'p_521b51c7430e4fed922cada790308a7c', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%8A%E6%B5%B7%E7%94%AC%E4%B9%85%E9%98%80%E9%97%A8%E5%88%B6%E9%80%A0%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528124, 'pripid': 'qff1f81c527ad4b34b5eac5c442dc7e82', 's_ext_nodenum': None, 'entname': '上海甬久阀门制造有限公司', 'oriregno': None, 'regno': '310120002627404', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 1, 15), 'opto': datetime.date(2035, 1, 14), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 1, 15), 'apprdate': datetime.date(2015, 1, 15), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '阀门（除特种设备）制造、加工（以上限分支机构经营）、批发、零售，水泵、消防器材、管道配件、五金工具、机电设备、仪器仪表、传动设备、液压设备、电子元器件的批发、零售。【依法须经批准的项目，经相关部门批准后方可开展经营活动】', 'domdistrict': None, 'dom': '上海市奉贤区奉城镇唐城街26弄5号223室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 1), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '奉贤区市场监管局', 'regorg_province': '上海', 'regorg_city': '上海市', 'regorg_county': '奉贤区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '王和云', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qff1f81c527ad4b34b5eac5c442dc7e82', 'fr_person_id': 'p_2ec034cfd4ab45f882b7570e72d11a67', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E8%8C%82%E5%90%8D%E5%B8%82%E5%8D%97%E8%BF%A6%E5%B1%B1%E8%8C%B6%E4%B8%9A%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528126, 'pripid': 'q17d4f84fd4aa46c5abe94e697ade964a', 's_ext_nodenum': None, 'entname': '茂名市南迦山茶业有限公司', 'oriregno': None, 'regno': '440900000034538', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2011, 2, 16), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2011, 2, 16), 'apprdate': datetime.date(2014, 8, 27), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '批发：预包装食品、散装食品、乳制品（食用油、干果、坚果、烘焙食品、糖果蜜饯，冷冻饮品，罐头，非酒精饮料，茶——不包括茶饮料，咖啡，可可，乳制品（不包括婴幼儿乳粉），婴幼儿乳粉）(凭有效食品流通许可经营）。销售：茶具、电器、工艺美术品、玉器，收购销售：农副产品（不含粮食、棉花、鲜茧）。(依法须经批准的项目，经相关部门批准后方可开展经营活动)', 'domdistrict': None, 'dom': '茂名市双山三路98号大院3号901', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 1), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '广东省茂名市茂南区工商行政管理局', 'regorg_province': '广东', 'regorg_city': '茂名市', 'regorg_county': '茂南区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '周顺强', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q17d4f84fd4aa46c5abe94e697ade964a', 'fr_person_id': 'p_7f5cdcb22b1f4b1e9788e69e49f1a9f4', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%97%A5%E7%85%A7%E5%B8%82%E5%A4%A7%E5%8B%87%E5%A4%A7%E8%8D%AF%E6%88%BF%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E8%8E%92%E5%8E%BF%E4%BA%8C%E5%88%86%E5%BA%97%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527872, 'pripid': 'qff111e55a3bc43008d3c5f9e57725929', 's_ext_nodenum': None, 'entname': '日照市大勇大药房有限公司莒县二分店', 'oriregno': None, 'regno': '371122329008539', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2006, 11, 1), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2006, 11, 1), 'apprdate': datetime.date(2012, 5, 22), 'regorg': None, 'entstatus': None, 'regcap': None, 'opscope': '处方药、非处方药、中成药、化学药制剂、抗生素制剂、生化药品零(药品经营许可证有效期至2016年5月9日止).(有效期限以许可证为准)。(依法须经批准的项目，经相关部门批准后方可开展经营活动)。', 'domdistrict': None, 'dom': '山东省日照市莒县城阳街道王家墩头村', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 6, 17, 41, 35), 'enttype_name': '其他有限责任公司分公司', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '莒县市场监督管理局', 'regorg_province': '山东', 'regorg_city': '日照市', 'regorg_county': '莒县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '庄仕伟', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qff111e55a3bc43008d3c5f9e57725929', 'fr_person_id': 'p_1819873723d743aa9cfa02d7379d0157', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E8%8E%92%E5%8E%BF%E9%B8%BF%E5%B1%95%E7%BA%BA%E7%BB%87%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527873, 'pripid': 'q96c924211789492c8d9ef14b560a296c', 's_ext_nodenum': None, 'entname': '莒县鸿展纺织有限公司', 'oriregno': None, 'regno': '371122200014898', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2013, 12, 20), 'opto': datetime.date(2023, 12, 20), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2013, 12, 20), 'apprdate': datetime.date(2013, 12, 20), 'regorg': None, 'entstatus': None, 'regcap': Decimal('100.000000'), 'opscope': '织布、化纤、涤纶加工销售。（以上经营范围涉及许可经营的凭有效许可证件经营）经营本企业自产产品的出口业务，企业生产所需的原辅料及相关技术进口业务，但国家限制、禁止经营的商品和技术除外。(依法须经批准的项目，经相关部门批准后方可开展经营活动)。', 'domdistrict': None, 'dom': '山东省日照市莒县经济开发区牛家村', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '莒县市场监督管理局', 'regorg_province': '山东', 'regorg_city': '日照市', 'regorg_county': '莒县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '王德元', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q96c924211789492c8d9ef14b560a296c', 'fr_person_id': 'p_0b39ce59fe3f49c3bf88199aa2165c0f', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%AD%A6%E6%B1%89%E5%87%AF%E5%93%B2%E5%BB%BA%E8%AE%BE%E5%B7%A5%E7%A8%8B%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528129, 'pripid': 'qf6ff3376dc9444789df777bfd67e2fc5', 's_ext_nodenum': None, 'entname': '武汉凯哲建设工程有限公司', 'oriregno': None, 'regno': '420113000035315', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2014, 3, 4), 'opto': datetime.date(2034, 3, 3), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2014, 3, 4), 'apprdate': datetime.date(2014, 3, 4), 'regorg': None, 'entstatus': None, 'regcap': Decimal('4.000000'), 'opscope': '建筑工程施工、机电工程安装施工、市政工程、道路设施工程施工、园林绿化工程施工。', 'domdistrict': None, 'dom': '武汉市汉南区纱帽街纱帽正街508号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 1), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '武汉经济技术开发区（汉南区）行政审批局', 'regorg_province': '湖北', 'regorg_city': '武汉市', 'regorg_county': '汉南区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '林龙渊', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qf6ff3376dc9444789df777bfd67e2fc5', 'fr_person_id': 'p_93986bab2e53450396899ce63a206cd8', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E8%8E%92%E5%8E%BF%E5%BB%BA%E9%91%AB%E6%88%BF%E5%B1%8B%E6%8B%86%E8%BF%81%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527874, 'pripid': 'q4c9163965d4b4414a56bb7cab2871864', 's_ext_nodenum': None, 'entname': '莒县建鑫房屋拆迁有限公司', 'oriregno': None, 'regno': '371122228003403', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2003, 3, 26), 'opto': datetime.date(2018, 3, 25), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2003, 3, 26), 'apprdate': datetime.date(2008, 4, 23), 'regorg': None, 'entstatus': None, 'regcap': Decimal('150.000000'), 'opscope': '接受委托对房屋及附属物实施拆除和动迁（涉及资质或许可经营的凭资质或许可证经营）(依法须经批准的项目，经相关部门批准后方可开展经营活动)。', 'domdistrict': None, 'dom': '山东省日照市莒县城区振兴路', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '莒县市场监督管理局', 'regorg_province': '山东', 'regorg_city': '日照市', 'regorg_county': '莒县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '赵贤根', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q4c9163965d4b4414a56bb7cab2871864', 'fr_person_id': 'p_b7a82110d3fd44a6b37dbc8c2bb73cd4', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%B4%E6%B2%82%E5%B8%82%E5%85%B0%E5%B1%B1%E5%8C%BA%E4%BD%B3%E6%98%8E%E6%B1%BD%E8%BD%A6%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527875, 'pripid': 'qb4d710a46e8241f899676cce02cd68d7', 's_ext_nodenum': None, 'entname': '临沂市兰山区佳明汽车服务有限公司', 'oriregno': None, 'regno': '371301200006802', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2012, 5, 11), 'opto': datetime.date(2022, 5, 11), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2012, 5, 11), 'apprdate': datetime.date(2018, 12, 6), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '批发零售：汽车配件，装具。（需许可经营的，须持许可证、资质证经营）(依法须经批准的项目，经相关部门批准后方可开展经营活动)。', 'domdistrict': None, 'dom': '兰山区临西十一路与涑河南街交汇向南1200米路东', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '临沂市工商行政管理局商城分局', 'regorg_province': '山东', 'regorg_city': '临沂市', 'regorg_county': '兰山区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '苗警明', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qb4d710a46e8241f899676cce02cd68d7', 'fr_person_id': 'p_6742c3b5ff484436b2f3e86bad108cf6', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8D%8E%E7%94%B5%E7%85%A4%E4%B8%9A%E9%9B%86%E5%9B%A2%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E5%B1%B1%E4%B8%9C%E5%88%86%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528357, 'pripid': 'q9bb616365a5f4ac09fd4f8ec30b6bc78', 's_ext_nodenum': None, 'entname': '华电煤业集团有限公司山东分公司', 'oriregno': None, 'regno': '91370103787413473F', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2006, 4, 29), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2006, 4, 29), 'apprdate': datetime.date(2011, 6, 27), 'regorg': None, 'entstatus': None, 'regcap': Decimal('0.000000'), 'opscope': '许可经营项目：一般经营项目：受本公司委托开展电力工程建设与监理；经济信息咨询。(未取得专项许可的项目除外)', 'domdistrict': None, 'dom': '济南市市中区经三路14号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48), 'enttype_name': '内资分公司', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '济南市市中区市场监督管理局', 'regorg_province': '山东', 'regorg_city': '济南市', 'regorg_county': '市中区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '郑鹏', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q9bb616365a5f4ac09fd4f8ec30b6bc78', 'fr_person_id': 'p_cac68873977a47d6928e7946fecc658c', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%BE%99%E5%B7%9D%E5%8E%BF%E7%99%BB%E4%BA%91%E9%95%87%E6%80%A1%E5%B9%B3%E7%95%9C%E7%89%A7%E6%B0%B4%E4%BA%A7%E5%85%BB%E6%AE%96%E5%9C%BA%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528133, 'pripid': 'qcd8a38404b1345f3a5a8dcbb9dd3e66e', 's_ext_nodenum': None, 'entname': '龙川县登云镇怡平畜牧水产养殖场', 'oriregno': None, 'regno': '441622000008583', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 4, 16), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 4, 16), 'apprdate': datetime.date(2012, 7, 17), 'regorg': None, 'entstatus': None, 'regcap': Decimal('8.000000'), 'opscope': '水果、坚果种植，鱼的养殖，猪的饲养。', 'domdistrict': None, 'dom': '龙川县登云镇樟塘', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 26, 10, 31, 13), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '广东省河源市龙川县工商行政管理局', 'regorg_province': '广东', 'regorg_city': '河源市', 'regorg_county': '龙川县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币元', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '郑怡平', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qcd8a38404b1345f3a5a8dcbb9dd3e66e', 'fr_person_id': 'p_7058a7e420a04891a8c3f7032ee8d1f5', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E7%89%A1%E4%B8%B9%E6%B1%9F%E5%B8%82%E5%85%B4%E9%9A%86%E7%A4%BE%E4%BC%9A%E7%A6%8F%E5%88%A9%E5%AE%9E%E4%B8%9A%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527880, 'pripid': 'q1fbedd2b7e794cfd8ebbc2a88779ac24', 's_ext_nodenum': None, 'entname': '牡丹江市兴隆社会福利实业公司', 'oriregno': None, 'regno': '231002100001243', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(1989, 9, 4), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1989, 9, 4), 'apprdate': datetime.date(2018, 11, 30), 'regorg': None, 'entstatus': None, 'regcap': Decimal('400.000000'), 'opscope': '制盖化工（不含化学危险品）。', 'domdistrict': None, 'dom': '黑龙江省牡丹江市东安区兴隆镇兴隆村', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 6, 18, 0, 15), 'enttype_name': '集体所有制', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '牡丹江市东安区市场监督管理局', 'regorg_province': '黑龙江', 'regorg_city': '牡丹江市', 'regorg_county': '东安区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': None, 'entstatus_name': '吊销', 'frname': '关斌', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q1fbedd2b7e794cfd8ebbc2a88779ac24', 'fr_person_id': 'p_007c3d753d76421699a18b4ea1f66ae0', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%BB%91%E9%BE%99%E6%B1%9F%E6%88%88%E9%9B%B7%E6%9C%BA%E7%94%B5%E4%BA%A7%E5%93%81%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527881, 'pripid': 'qfb00a328fee347f5b8ebfe7b4fa47d51', 's_ext_nodenum': None, 'entname': '黑龙江戈雷机电产品有限公司', 'oriregno': None, 'regno': '230000400000863', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(1996, 9, 6), 'opto': datetime.date(2008, 9, 5), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1996, 9, 6), 'apprdate': datetime.date(2018, 11, 29), 'regorg': None, 'entstatus': None, 'regcap': None, 'opscope': '生产、销售工业、民用滤水、净水装置等系列机电产品。', 'domdistrict': None, 'dom': '黑龙江省哈尔滨市道里区安发桥街25号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48), 'enttype_name': '有限责任公司（台港澳自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '哈尔滨市市场监督管理局', 'regorg_province': '黑龙江', 'regorg_city': '哈尔滨市', 'regorg_county': '道里区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '美元', 'share_ratio': '0.0', 'entstatus_name': '吊销', 'frname': '黄士钰', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qfb00a328fee347f5b8ebfe7b4fa47d51', 'fr_person_id': 'p_7486009a97f647c591d7f8d8c344335f', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%87%8D%E5%BA%86%E6%97%A0%E7%BA%BF%E7%94%B5%E4%B8%93%E7%94%A8%E8%AE%BE%E5%A4%87%E5%8E%82%E4%B8%87%E7%9B%9B%E5%88%86%E5%8E%82%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528137, 'pripid': 'q367b9d0364ca445d9eb97cb8b4427000', 's_ext_nodenum': None, 'entname': '重庆无线电专用设备厂万盛分厂', 'oriregno': None, 'regno': '5001101900196', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(1995, 3, 28), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1995, 3, 28), 'apprdate': datetime.date(2003, 9, 22), 'regorg': None, 'entstatus': None, 'regcap': Decimal('318.000000'), 'opscope': '*空调、净化、无线电专用设备及配件制造。', 'domdistrict': None, 'dom': '重庆市万盛浸水垭33号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 42), 'enttype_name': '国有经济', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '重庆市工商行政管理局万盛经济技术开发区分局', 'regorg_province': '重庆', 'regorg_city': '重庆市', 'regorg_county': '綦江区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '程兵', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q367b9d0364ca445d9eb97cb8b4427000', 'fr_person_id': 'p_22e9a311df9e4cec92a6240d21cd908f', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%89%AC%E5%B7%9E%E7%A7%80%E4%B8%AD%E6%96%87%E6%9C%8D%E8%A3%85%E5%BA%97%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528139, 'pripid': 'qa5c701665b7645119b5d0b190063f267', 's_ext_nodenum': None, 'entname': '扬州秀中文服装店', 'oriregno': None, 'regno': '321027000263237', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 3, 12), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 3, 12), 'apprdate': datetime.date(2015, 3, 12), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '服装零售。（依法须经批准的项目，经相关部门批准后方可开展经营活动）', 'domdistrict': None, 'dom': '扬州市文昌综合楼', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 2), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '扬州市邗江区市场监督管理局', 'regorg_province': '江苏', 'regorg_city': '扬州市', 'regorg_county': '邗江区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '徐文秀', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qa5c701665b7645119b5d0b190063f267', 'fr_person_id': 'p_ab72d4f0c4ae44ec9f5c656c97975925', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E8%82%A5%E5%9F%8E%E6%81%92%E5%98%89%E6%88%BF%E4%BA%A7%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528143, 'pripid': 'q7cf821b7dc3a4422b0ee2a5c186a6a65', 's_ext_nodenum': None, 'entname': '肥城恒嘉房产服务有限公司', 'oriregno': None, 'regno': '370983200030700', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 1, 21), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 1, 21), 'apprdate': datetime.date(2015, 1, 21), 'regorg': None, 'entstatus': None, 'regcap': Decimal('30.000000'), 'opscope': '房地产评估，房地产信息咨询、服务，房屋买卖，代办房产抵押贷款，房屋租赁及房屋置换的代理服务。(依法须经批准的项目，经相关部门批准后方可开展经营活动)', 'domdistrict': None, 'dom': '山东泰安肥城新城龙山路96号水岸桃园12幢209号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 2), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '肥城市市场监督管理局', 'regorg_province': '山东', 'regorg_city': '泰安市', 'regorg_county': '肥城市', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '王绍立', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q7cf821b7dc3a4422b0ee2a5c186a6a65', 'fr_person_id': 'p_520a361d372049d1851ad44055b146a2', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8C%97%E4%BA%AC%E7%85%A7%E8%A7%81%E5%B9%BF%E5%91%8A%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527888, 'pripid': 'qf38d60dffaa445da9d0743b4e9395dcc', 's_ext_nodenum': None, 'entname': '北京照见广告有限公司', 'oriregno': None, 'regno': '110103005137385', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(1998, 7, 29), 'opto': datetime.date(2018, 7, 28), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1998, 7, 29), 'apprdate': datetime.date(2010, 10, 20), 'regorg': None, 'entstatus': None, 'regcap': Decimal('100.000000'), 'opscope': '设计、制作、代理、发布广告；承办展览展示；市场调查。', 'domdistrict': None, 'dom': '北京市朝阳区西坝河168号恒川酒店内G08室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 7, 14, 42, 43), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '北京市工商行政管理局朝阳分局', 'regorg_province': '北京', 'regorg_city': '北京市', 'regorg_county': '朝阳区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '杜军', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qf38d60dffaa445da9d0743b4e9395dcc', 'fr_person_id': 'p_b1cc6f39098e48e7803cb43b618dcad0', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%B0%E5%8E%BF%E6%B5%B7%E5%8D%9A%E7%BD%AE%E4%B8%9A%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528145, 'pripid': 'qfee0dd7349b54b6a8b6ccd03f82ead06', 's_ext_nodenum': None, 'entname': '丰县海博置业有限公司', 'oriregno': None, 'regno': '320321000133782', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 4, 29), 'opto': datetime.date(2035, 4, 27), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 4, 29), 'apprdate': datetime.date(2015, 4, 29), 'regorg': None, 'entstatus': None, 'regcap': Decimal('1000.000000'), 'opscope': '房地产开发与销售。（依法须经批准的项目，经相关部门批准后方可开展经营活动）', 'domdistrict': None, 'dom': '丰县宋楼镇工业园区', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 2), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '丰县市场监督管理局', 'regorg_province': '江苏', 'regorg_city': '徐州市', 'regorg_county': '丰县', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '朱静球', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qfee0dd7349b54b6a8b6ccd03f82ead06', 'fr_person_id': 'p_19bbd563d7a84c8b8cd28063d9503bcd', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%88%90%E9%83%BD%E5%90%89%E4%B9%8B%E7%91%9E%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528146, 'pripid': 'q2c698c282cc14de6aa12cda3ca6c333e', 's_ext_nodenum': None, 'entname': '成都吉之瑞投资管理有限公司', 'oriregno': None, 'regno': '510105000312918', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2013, 1, 10), 'opto': datetime.date(3999, 1, 1), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2013, 1, 10), 'apprdate': datetime.date(2014, 4, 29), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '投资与资产管理，企业形象策划，知识产权代理，包装服务；销售：工艺品，纺织、服装及家庭用品；批发兼零售：预包装食品（有效期至2016年1月15日）。(依法须经批准的项目，经相关部门批准后方可开展经营活动)。', 'domdistrict': None, 'dom': '成都市青羊区百花潭路8号5层505室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 2), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '青羊区市场和质量监督管理局', 'regorg_province': '四川', 'regorg_city': '成都市', 'regorg_county': '青羊区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '蔡瑜', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q2c698c282cc14de6aa12cda3ca6c333e', 'fr_person_id': 'p_b127beb0602b4fa7be76ffe0451d9c63', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%86%85%E4%B9%A1%E5%8E%BF%E5%AF%8C%E6%B0%91%E8%9A%95%E6%A1%91%E4%B8%93%E4%B8%9A%E5%90%88%E4%BD%9C%E7%A4%BE%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527891, 'pripid': 'q75f162211480443e91c98bdfd435b4f8', 's_ext_nodenum': None, 'entname': '内乡县富民蚕桑专业合作社', 'oriregno': None, 'regno': '411325NA000043X', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 4, 27), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 4, 27), 'apprdate': datetime.date(2019, 1, 22), 'regorg': None, 'entstatus': None, 'regcap': Decimal('110.000000'), 'opscope': '组织采购、供应成员蚕桑生产所需的种、桑苗、蚕药、化肥、蚕具;组织销售成员生产的蚕茧及相关产品;开展成员所需的运输(非营运)、贮藏、包装服务;引进新技术、新品种,开展技术培训(办学除外)、技术交流和咨询服务*', 'domdistrict': None, 'dom': '内乡县灌涨镇杨营村村部', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 8, 14, 26, 20), 'enttype_name': '农民专业合作社', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '南阳市内乡县市场监督管理局', 'regorg_province': '河南', 'regorg_city': '南阳市', 'regorg_county': '内乡县', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': None, 'entstatus_name': '注销', 'frname': '王佰彦', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': datetime.date(2019, 1, 22), 'revdate': None, 'eid': 'q75f162211480443e91c98bdfd435b4f8', 'fr_person_id': 'p_d8a25be289764a1eb01faa00f3959fc5', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': '决议解散', 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%B1%B1%E4%B8%9C%E5%B7%A8%E6%81%92%E7%87%83%E6%96%99%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527892, 'pripid': 'qdbeae8854efe4fa680791c94eb16657d', 's_ext_nodenum': None, 'entname': '山东巨恒燃料有限公司', 'oriregno': None, 'regno': '370000228066284', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2007, 6, 19), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2007, 6, 19), 'apprdate': datetime.date(2015, 12, 21), 'regorg': None, 'entstatus': None, 'regcap': Decimal('800.000000'), 'opscope': '煤炭、焦炭的批发经营；建筑材料、农副产品（不含国家专控类）、钢材的销售；商务信息咨询（需经许可经营的，须凭许可证经营）。(依法须经批准的项目，经相关部门批准后方可开展经营活动)', 'domdistrict': None, 'dom': '济南市市中区建设路93号世纪佳园13栋2单元203室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 8, 14, 29, 10), 'enttype_name': '有限责任公司', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '济南市市中区市场监督管理局', 'regorg_province': '山东', 'regorg_city': '济南市', 'regorg_county': '市中区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': None, 'entstatus_name': '吊销', 'frname': '赵子仪', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': datetime.date(2018, 5, 10), 'eid': 'qdbeae8854efe4fa680791c94eb16657d', 'fr_person_id': 'p_96e0f3325f964ea7b4aeee64110c1d16', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': '《中华人民共和国公司法》第二百一十一条、《中华人民共和国公司登记管理条例》第六十七条和第七十九条', 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%BD%90%E9%BD%90%E5%93%88%E5%B0%94%E5%B8%82%E9%BB%91%E9%BE%99%E5%B9%BF%E5%91%8A%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527899, 'pripid': 'qe91ee6ade6a642d4ae456e62b7408596', 's_ext_nodenum': None, 'entname': '齐齐哈尔市黑龙广告有限公司', 'oriregno': '2302001100254', 'regno': '230200100000974', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': '7259', 'opfrom': datetime.date(1995, 10, 4), 'opto': datetime.date(9999, 12, 31), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1995, 10, 4), 'apprdate': datetime.date(2016, 6, 13), 'regorg': None, 'entstatus': None, 'regcap': Decimal('5.000000'), 'opscope': '代理、设计、制作、发布国内各类广告；商品信息服务、中介服务；室内装潢。', 'domdistrict': None, 'dom': '黑龙江省齐齐哈尔市建华区中华西路168号', 'reccap': Decimal('5.000000'), 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 11, 11, 37, 32), 'enttype_name': '有限责任公司（国有独资）', 'industryphy_name': None, 'industryco_name': '其他广告服务', 'regorg_name': '齐齐哈尔市工商行政管理局建华分局', 'regorg_province': '黑龙江', 'regorg_city': '齐齐哈尔市', 'regorg_county': '建华区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': None, 'entstatus_name': '吊销，未注销', 'frname': '孙凤华', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': datetime.date(2016, 6, 13), 'eid': 'qe91ee6ade6a642d4ae456e62b7408596', 'fr_person_id': 'p_ca9072c7d7da4da3be3d8c9626a908dd', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%85%96%E5%B7%9E%E5%B8%82%E4%B8%87%E4%BD%B3%E7%BD%91%E7%BB%9C%E6%9E%81%E5%85%89%E8%BF%9E%E9%94%81%E5%BA%97%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528158, 'pripid': 'qcf4c91af73424294b01fc496fdc59313', 's_ext_nodenum': None, 'entname': '兖州市万佳网络极光连锁店', 'oriregno': None, 'regno': '370882329013433', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2005, 8, 2), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2005, 8, 2), 'apprdate': datetime.date(2007, 6, 21), 'regorg': None, 'entstatus': None, 'regcap': None, 'opscope': '互联网上网服务.(凭许可证经营）。', 'domdistrict': None, 'dom': '兖州市八一西路路南（酒厂对过）', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 44), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '济宁市兖州区市场监督管理局', 'regorg_province': '山东', 'regorg_city': '济宁市', 'regorg_county': '兖州区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '姚爱玲', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qcf4c91af73424294b01fc496fdc59313', 'fr_person_id': 'p_d4912308dbc5450ab61d159d6af590d7', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%87%8D%E5%BA%86%E9%81%93%E6%9C%AC%E5%86%9C%E4%B8%9A%E5%BC%80%E5%8F%91%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528161, 'pripid': 'qda7778212d374184a84ddf38c80be391', 's_ext_nodenum': None, 'entname': '重庆道本农业开发有限公司', 'oriregno': None, 'regno': '500383000028394', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2011, 8, 2), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2011, 8, 2), 'apprdate': datetime.date(2013, 5, 16), 'regorg': None, 'entstatus': None, 'regcap': Decimal('210.000000'), 'opscope': '农业开发；花卉、苗木、果树种植、销售；淡水鱼养殖、销售。■', 'domdistrict': None, 'dom': '重庆市永川区人民西路10-29#', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 2), 'enttype_name': '有限责任公司', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '重庆市工商行政管理局永川区分局', 'regorg_province': '重庆', 'regorg_city': '重庆市', 'regorg_county': '永川区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '蒋永荣', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qda7778212d374184a84ddf38c80be391', 'fr_person_id': 'p_3c424e9849884358be4496bbc69f5428', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%9C%E5%B9%B3%E5%8E%BF%E5%88%A9%E5%88%A9%E9%85%B1%E5%9B%AD%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528167, 'pripid': 'qb04656107e5342efa41886efae85c8e6', 's_ext_nodenum': None, 'entname': '东平县利利酱园', 'oriregno': None, 'regno': '370923300003732', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2012, 8, 24), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2012, 8, 24), 'apprdate': datetime.date(2012, 8, 24), 'regorg': None, 'entstatus': None, 'regcap': None, 'opscope': '批发预包装食品兼散装食品。（依法须经批准的项目，经相关部门批准后方可开展经营活动）', 'domdistrict': None, 'dom': '山东省泰安市东平县州城街道陈坊村', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 45), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '东平县市场监督管理局', 'regorg_province': '山东', 'regorg_city': '泰安市', 'regorg_county': '东平县', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '谷志兴', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qb04656107e5342efa41886efae85c8e6', 'fr_person_id': 'p_61f43a6dc809459489c61ac6bc3f0351', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8D%97%E9%98%B3%E4%B8%87%E9%87%8C%E8%BE%BE%E5%95%86%E8%B4%B8%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527914, 'pripid': 'qd388b4b83d3b438283a6fe082dff38e4', 's_ext_nodenum': None, 'entname': '南阳万里达商贸有限责任公司', 'oriregno': '4113002002626', 'regno': '411300100008659', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': '5174', 'opfrom': datetime.date(2006, 9, 14), 'opto': datetime.date(2014, 9, 13), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2006, 9, 14), 'apprdate': datetime.date(2011, 7, 22), 'regorg': None, 'entstatus': None, 'regcap': Decimal('80.000000'), 'opscope': '摩托及配件、建筑材料、家用电器、五金工具(国家法律法规、国务院决定规定须经审批方可经营的、未获得审批前不得开展经营活动)#', 'domdistrict': None, 'dom': '南阳市新华东路摩托市场101号', 'reccap': Decimal('80.000000'), 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 11, 11, 37, 36), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': '五金产品批发', 'regorg_name': '南阳市工商行政管理局专业分局', 'regorg_province': '河南', 'regorg_city': '南阳市', 'regorg_county': '宛城区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '张文云', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qd388b4b83d3b438283a6fe082dff38e4', 'fr_person_id': 'p_36c34a02e19c4cd3808d6b4504ac7d92', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E8%8D%86%E9%97%A8%E6%B4%AA%E5%BB%BA%E7%BD%AE%E4%B8%9A%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528170, 'pripid': 'q156a4655a60341658b3945ca6d3d687e', 's_ext_nodenum': None, 'entname': '荆门洪建置业有限公司', 'oriregno': None, 'regno': '420800000141082', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 7, 14), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 7, 14), 'apprdate': datetime.date(2010, 7, 14), 'regorg': None, 'entstatus': None, 'regcap': Decimal('1000.000000'), 'opscope': '一般经营项目：房地产开发，五金、水暖、建材销售。', 'domdistrict': None, 'dom': '荆门市虎牙关大道38号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 2), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '荆门市工商行政管理局', 'regorg_province': '湖北', 'regorg_city': '荆门市', 'regorg_county': None, 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '陈万银', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q156a4655a60341658b3945ca6d3d687e', 'fr_person_id': 'p_efaa68dd4f9e423eb676e99e311f0e85', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%B9%96%E5%8D%97%E5%8D%9A%E6%99%9F%E6%88%BF%E5%9C%B0%E4%BA%A7%E5%BC%80%E5%8F%91%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528175, 'pripid': 'q5ba46683061940fcbda5e05430fdf67a', 's_ext_nodenum': None, 'entname': '湖南博晟房地产开发有限公司', 'oriregno': None, 'regno': '431322000017470', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2012, 3, 2), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2012, 3, 2), 'apprdate': datetime.date(2012, 3, 2), 'regorg': None, 'entstatus': None, 'regcap': Decimal('1000.000000'), 'opscope': '房地产开发（凭本企业《资质证书》且在相应的等级范围内从事经营活动，有效期暂定一年）；房地产营销策划；机电设备、五金、交电、建筑材料（不含专项审批）的销售。', 'domdistrict': None, 'dom': '湖南省新化县上梅镇天华南路', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 2), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '新化县市场监督管理局', 'regorg_province': '湖南', 'regorg_city': '娄底市', 'regorg_county': '新化县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '杨久长', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q5ba46683061940fcbda5e05430fdf67a', 'fr_person_id': 'p_a3c0ae6e53d94e939c41506f4acf56da', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%B2%88%E9%98%B3%E5%A5%A5%E6%96%AF%E5%A8%81%E5%B0%94%E9%A3%9F%E5%93%81%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528178, 'pripid': 'q2f01403068fb4ef1b684eebe6637425c', 's_ext_nodenum': None, 'entname': '沈阳奥斯威尔食品有限公司', 'oriregno': None, 'regno': '210105000010337', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2008, 5, 19), 'opto': datetime.date(2018, 5, 18), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2008, 5, 19), 'apprdate': datetime.date(2008, 5, 19), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '预包装食品销售。（食品卫生许可证有效期至２０１２年０５月１４日）', 'domdistrict': None, 'dom': '沈阳市皇姑区黑龙江街29号602室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 2), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '沈阳市皇姑区市场监督管理局', 'regorg_province': '辽宁', 'regorg_city': '沈阳市', 'regorg_county': '皇姑区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '齐文', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q2f01403068fb4ef1b684eebe6637425c', 'fr_person_id': 'p_553b6aafc77643e0994e0840e16def70', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%B2%88%E9%98%B3%E8%BF%9C%E9%91%AB%E8%BE%BE%E5%95%86%E8%B4%B8%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528179, 'pripid': 'q19e0fcbddbc645a9b37d2bf750b69f1a', 's_ext_nodenum': None, 'entname': '沈阳远鑫达商贸有限公司', 'oriregno': None, 'regno': '210106000010995', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2003, 11, 4), 'opto': datetime.date(2018, 11, 4), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2003, 11, 4), 'apprdate': datetime.date(2011, 6, 23), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '金属材料、机械、电子设备、汽车配件、橡胶制品销售。', 'domdistrict': None, 'dom': '沈阳市铁西区北一西路34号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 2), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '沈阳市铁西区市场监督管理局', 'regorg_province': '辽宁', 'regorg_city': '沈阳市', 'regorg_county': '铁西区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '宋淑梅', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q19e0fcbddbc645a9b37d2bf750b69f1a', 'fr_person_id': 'p_ef4a457be28b4a76be9d3e2f9eed8ae4', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E7%8F%A0%E6%B5%B7%E6%98%8A%E6%9E%97%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528180, 'pripid': 'q7e4cd4faf5be43aa8314e3e6011e9aec', 's_ext_nodenum': None, 'entname': '珠海昊林科技有限公司', 'oriregno': None, 'regno': '440400000450025', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2013, 10, 25), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2013, 10, 25), 'apprdate': datetime.date(2013, 10, 25), 'regorg': None, 'entstatus': None, 'regcap': Decimal('100.000000'), 'opscope': '科技根据《珠海经济特区商事登记条例》，经营范围不属登记事项。以下经营范围信息由商事主体提供，该商事主体对信息的真实性、合法性负责：(依法须经批准的项目，经相关部门批准后方可开展经营活动)', 'domdistrict': None, 'dom': '广东省珠海市香洲神前路63号2栋1单元201房', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 2), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '珠海市工商行政管理局', 'regorg_province': '广东', 'regorg_city': '珠海市', 'regorg_county': '香洲区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '李杰', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q7e4cd4faf5be43aa8314e3e6011e9aec', 'fr_person_id': 'p_90f9d56a7f4f4ce99556eb88ac2019da', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8C%97%E4%BA%AC%E7%B4%A2%E4%BE%9D%E8%BE%BE%E5%95%86%E8%B4%B8%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45527927, 'pripid': 'q88f305e116674e65b1ccd5e9a73d3eb4', 's_ext_nodenum': None, 'entname': '北京索依达商贸有限公司', 'oriregno': None, 'regno': '110106016931575', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': '5299', 'opfrom': datetime.date(2014, 3, 25), 'opto': datetime.date(2034, 3, 24), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2014, 3, 25), 'apprdate': datetime.date(2015, 3, 25), 'regorg': None, 'entstatus': None, 'regcap': Decimal('988.816800'), 'opscope': '销售鞋、日用品、五金交电、服装、针纺织品。（依法须经批准的项目，经相关部门批准后依批准的内容开展经营活动。）', 'domdistrict': None, 'dom': '北京市丰台区大红门西里1号北京市中联华都红门鞋城市场A层第A3052-3067号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 11, 11, 38, 14), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': '其他未列明零售业', 'regorg_name': '北京市工商行政管理局丰台分局', 'regorg_province': '北京市', 'regorg_city': None, 'regorg_county': '丰台区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '蔡秀善', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q88f305e116674e65b1ccd5e9a73d3eb4', 'fr_person_id': 'p_b2acf63aebe940e999ff70a4f2439515', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%8A%E6%B5%B7%E6%9D%B0%E9%80%9A%E7%89%A9%E6%B5%81%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528184, 'pripid': 'q7ff2250d707d49efa2802a9396420bd5', 's_ext_nodenum': None, 'entname': '上海杰通物流有限公司', 'oriregno': None, 'regno': '310228001015540', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2007, 5, 8), 'opto': datetime.date(2017, 5, 7), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2007, 5, 8), 'apprdate': datetime.date(2007, 5, 8), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '道路普通货运，国内货运代理，装卸服务，五金交电，建筑装潢材料，日用百货销售（涉及行政许可的凭许可证经营）。', 'domdistrict': None, 'dom': '上海市金山区金山卫镇新卫公路838号1号楼212室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 2), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '金山区市场监管局', 'regorg_province': '上海', 'regorg_city': '上海市', 'regorg_county': '金山区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '汪武辉', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q7ff2250d707d49efa2802a9396420bd5', 'fr_person_id': 'p_7f2efc573e454bd98da0d837ffb4b004', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%94%A6%E5%B7%9E%E7%BB%8F%E6%B5%8E%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91%E5%8C%BA%E5%8F%8B%E9%B9%8F%E7%94%B5%E5%AD%90%E6%B8%B8%E6%88%8F%E5%8E%85%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528185, 'pripid': 'q964f000314fc4fa88935545397cdb001', 's_ext_nodenum': None, 'entname': '锦州经济技术开发区友鹏电子游戏厅', 'oriregno': None, 'regno': '210709000002484', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2013, 6, 7), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2013, 6, 7), 'apprdate': datetime.date(2013, 6, 7), 'regorg': None, 'entstatus': None, 'regcap': Decimal('20.000000'), 'opscope': '电子游戏服务。', 'domdistrict': None, 'dom': '锦州经经技术开发区朝阳新路天港花苑1-38号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 3), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '锦州滨海新区市场监督管理局', 'regorg_province': '辽宁', 'regorg_city': '锦州市', 'regorg_county': None, 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '周辉', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q964f000314fc4fa88935545397cdb001', 'fr_person_id': 'p_f6a48244ee3541d6ba757fa3b813d3d0', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%BA%91%E5%8D%97%E7%BB%9A%E9%98%81%E8%A3%85%E9%A5%B0%E8%AE%BE%E8%AE%A1%E5%B7%A5%E7%A8%8B%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528202, 'pripid': 'q0b4c52534d7f480ba53da7755cca6dbb', 's_ext_nodenum': None, 'entname': '云南绚阁装饰设计工程有限公司', 'oriregno': None, 'regno': '530181100007067', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2009, 3, 18), 'opto': datetime.date(2019, 3, 18), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2009, 3, 18), 'apprdate': datetime.date(2011, 4, 14), 'regorg': None, 'entstatus': None, 'regcap': Decimal('600.000000'), 'opscope': '室内外装饰设计与施工；建筑材料、装饰材料、五金交电、工艺美术品、电子产品、普通机械及配件、金属材料的销售。', 'domdistrict': None, 'dom': '安宁市大屯新区金沙小区32号铺面', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 3), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '安宁市市场监督管理局', 'regorg_province': '云南', 'regorg_city': '昆明市', 'regorg_county': '安宁市', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '吴玉刚', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q0b4c52534d7f480ba53da7755cca6dbb', 'fr_person_id': 'p_d8d6b07c72724469a1d96201d6e51294', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%8A%E6%B5%B7%E8%AF%97%E4%BA%88%E6%A2%A6%E6%96%87%E5%8C%96%E4%BC%A0%E6%92%AD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528208, 'pripid': 'qc7ea6040ade04b27ad763fc86313d7f7', 's_ext_nodenum': None, 'entname': '上海诗予梦文化传播有限公司', 'oriregno': None, 'regno': '310120002649976', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 2, 2), 'opto': datetime.date(2045, 2, 1), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 2, 2), 'apprdate': datetime.date(2015, 2, 2), 'regorg': None, 'entstatus': None, 'regcap': Decimal('150.000000'), 'opscope': '文化艺术交流策划，图文设计、制作，企业形象策划，设计、制作、代理、发布各类广告，展览展示服务，市场营销策划，摄影服务，公关活动策划，婚庆服务，商务信息咨询，创意服务，品牌策划，动漫设计，电子商务（不得从事增值电信、金融业务），日用百货、化妆品、服装服饰、针纺织品、箱包、办公设备、文具用品、工艺礼品、纸制品、电子产品、数码设备的批发、零售。【依法须经批准的项目，经相关部门批准后方可开展经营活动】', 'domdistrict': None, 'dom': '上海市奉贤区金齐路868号4993室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 3), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '奉贤区市场监管局', 'regorg_province': '上海', 'regorg_city': '上海市', 'regorg_county': '奉贤区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '张纯', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qc7ea6040ade04b27ad763fc86313d7f7', 'fr_person_id': 'p_58901f0127634f5b835a59ee3429f976', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%A4%A7%E5%BA%86%E7%9A%87%E5%98%89%E5%A9%9A%E5%BA%86%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528210, 'pripid': 'q122f5cc802fa42dc957dabba3e70e38f', 's_ext_nodenum': None, 'entname': '大庆皇嘉婚庆有限公司', 'oriregno': None, 'regno': '230607000074969', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 3, 26), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 3, 26), 'apprdate': datetime.date(2015, 3, 26), 'regorg': None, 'entstatus': None, 'regcap': Decimal('1.000000'), 'opscope': '婚庆礼仪服务；摄影服务；组织文化艺术交流活动；工程管理服务；企业管理服务；企业营销策划；会展服务；舞台表演宣传、组织、辅助服务；平面设计；图文设计；设计、制作、发布、代理国内广告；摄影器材、灯具、电子产品、服装鞋帽、鲜花、礼品、工艺品（收藏品除外）销售；机械设备租赁。', 'domdistrict': None, 'dom': '黑龙江省大庆市高新区湖滨教师花园F-4-5-101', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 3), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '大庆市市场监督管理局高新技术产业开发区分局', 'regorg_province': '黑龙江', 'regorg_city': '大庆市', 'regorg_county': None, 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '齐光', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q122f5cc802fa42dc957dabba3e70e38f', 'fr_person_id': 'p_84ddd266dd9043918c148eabc86a77bb', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E7%A6%84%E4%B8%B0%E5%8E%BF%E9%87%91%E5%B1%B1%E9%95%87%E5%86%9C%E4%B8%9A%E6%8A%80%E6%9C%AF%E6%8E%A8%E5%B9%BF%E4%B8%AD%E5%BF%83%E5%86%9C%E4%B8%9A%E6%8A%80%E6%9C%AF%E5%92%A8%E8%AF%A2%E6%9C%8D%E5%8A%A1%E9%83%A8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528211, 'pripid': 'q28fe6b01d46e4ae2b841044d4e675ffa', 's_ext_nodenum': None, 'entname': '禄丰县金山镇农业技术推广中心农业技术咨询服务部', 'oriregno': None, 'regno': '532331000000813', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(1993, 7, 31), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1993, 7, 31), 'apprdate': datetime.date(2008, 4, 29), 'regorg': None, 'entstatus': None, 'regcap': Decimal('1.000000'), 'opscope': '许可经营项目：农药零售；一般经营项目：化肥、农膜、包装种子、微肥、植物生长调节剂、手动喷雾器及配件的零售。兼营范围', 'domdistrict': None, 'dom': '禄丰县金山镇杨家庄65号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 52), 'enttype_name': '国有经营单位（非法人）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '禄丰县市场监督管理局', 'regorg_province': '云南', 'regorg_city': '楚雄州', 'regorg_county': '禄丰县', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '胡明德', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q28fe6b01d46e4ae2b841044d4e675ffa', 'fr_person_id': 'p_4fab20ce90724ee49cc711dec24c3ddb', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%B9%BF%E8%A5%BF%E5%86%A0%E8%85%BE%E5%86%8D%E7%94%9F%E8%B5%84%E6%BA%90%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528215, 'pripid': 'qe4495665d6e740f993bc62b37aabef0c', 's_ext_nodenum': None, 'entname': '广西冠腾再生资源有限公司', 'oriregno': None, 'regno': '450923200007769', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2011, 9, 26), 'opto': datetime.date(2031, 9, 26), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2011, 9, 26), 'apprdate': datetime.date(2012, 11, 15), 'regorg': None, 'entstatus': None, 'regcap': Decimal('200.000000'), 'opscope': '矿产品废料、废塑料、橡胶与皮革废碎料及边角料、废纺织原料、废纸及纸板、木废料及软木废料、废金属回收与销售。', 'domdistrict': None, 'dom': '广西博白县龙潭产业园', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 3), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '博白县工商行政管理局', 'regorg_province': '广西', 'regorg_city': '玉林市', 'regorg_county': '博白县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '0.0', 'entstatus_name': '在营（开业）', 'frname': '张国传', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qe4495665d6e740f993bc62b37aabef0c', 'fr_person_id': 'p_97ab080067394527afa79c8b90a5ee35', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E8%B5%A4%E5%B3%B0%E5%B8%82%E7%BB%BF%E9%A9%B0%E5%95%86%E8%B4%B8%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528221, 'pripid': 'qc8c71c3059544d129bb3a984c4c19fe2', 's_ext_nodenum': None, 'entname': '赤峰市绿驰商贸有限公司', 'oriregno': None, 'regno': '150402000031239', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2011, 8, 19), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2011, 8, 19), 'apprdate': datetime.date(2014, 4, 4), 'regorg': None, 'entstatus': None, 'regcap': Decimal('3.000000'), 'opscope': '农副产品销售（不含许可项目）；仓储服务', 'domdistrict': None, 'dom': '内蒙古自治区赤峰市红山区六西街贾营子村村委会对面', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司（自然人独资）（1151）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '赤峰市工商行政管理局红山区分局', 'regorg_province': '内蒙古', 'regorg_city': '赤峰市', 'regorg_county': '红山区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '高磊', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qc8c71c3059544d129bb3a984c4c19fe2', 'fr_person_id': 'p_dea9a1abbf4542ebbfaff10cb07bde73', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E8%82%87%E5%BA%86%E5%B8%82%E5%8D%8E%E8%8B%91%E9%A5%AE%E9%A3%9F%E5%A8%B1%E4%B9%90%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528224, 'pripid': 'q168c2e9ee6b34dd3b8b41e0a99c9e95d', 's_ext_nodenum': None, 'entname': '肇庆市华苑饮食娱乐有限公司', 'oriregno': None, 'regno': '441200000016794', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2000, 1, 14), 'opto': datetime.date(2011, 12, 1), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2000, 1, 14), 'apprdate': datetime.date(2011, 9, 13), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '中餐制售（不包含裱花蛋糕，不包含凉菜，不包含生食海产品），零售：国产烟酒。', 'domdistrict': None, 'dom': '肇庆市七星岩旅游渡假区南干道北侧', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '广东省肇庆市端州区工商行政管理局', 'regorg_province': '广东', 'regorg_city': '肇庆市', 'regorg_county': '端州区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '张宇', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q168c2e9ee6b34dd3b8b41e0a99c9e95d', 'fr_person_id': 'p_c39fdbfeb8d7412fbc26521a8b02d759', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%8A%E6%B5%B7%E9%94%A6%E6%97%97%E5%95%86%E5%8A%A1%E5%92%A8%E8%AF%A2%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528231, 'pripid': 'qf1e8fcd7d6f243a0bc83f91e918ab244', 's_ext_nodenum': None, 'entname': '上海锦旗商务咨询有限公司', 'oriregno': None, 'regno': '310000400637994', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 12, 8), 'opto': datetime.date(2030, 12, 7), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 12, 8), 'apprdate': datetime.date(2010, 12, 8), 'regorg': None, 'entstatus': None, 'regcap': Decimal('38.000000'), 'opscope': '投资咨询，企业管理咨询，贸易信息咨询，企业形象策划，市场营销策划，会务会展服务（主办、承办除外），餐饮（限分支机构）（涉及行政许可的，凭许可证经营）。', 'domdistrict': None, 'dom': '上海市闵行区光华路2118号第4幢243室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司（台港澳法人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '上海市工商局', 'regorg_province': '上海', 'regorg_city': '上海市', 'regorg_county': '闵行区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '美元', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '浅井航一（ASAI KOICHI）', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qf1e8fcd7d6f243a0bc83f91e918ab244', 'fr_person_id': 'p_751d74657fae45edb71fea7f2e5ef2f8', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%8A%E6%B5%B7%E6%97%8C%E5%A7%AE%E5%AE%9E%E4%B8%9A%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528232, 'pripid': 'qe4ca678407f7454595527abc1d60833e', 's_ext_nodenum': None, 'entname': '上海旌姮实业有限公司', 'oriregno': None, 'regno': '310120002915993', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 9, 11), 'opto': datetime.date(2035, 9, 10), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 9, 11), 'apprdate': datetime.date(2015, 9, 11), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '日用百货、服装服饰、皮革制品、鞋帽、洗涤用品、化妆品、音响设备及器材、汽车配件、化工原料及产品（除危险化学品、监控化学品、民用爆炸物品、易制毒化学品）、通讯器材（除卫星电视广播地面接收设施）、计算机、软件及辅助设备、五金交电、塑料制品、金属材料、金属制品、钢材、电子产品、数码产品、仪器仪表、玩具、摄影器材、办公用品、包装材料、工艺品、机电设备及配件、机械设备及配件、装潢材料、装饰材料的批发、零售，从事货物进出口及技术进出口业务，电脑图文设计、制作，设计、制作、代理、发布各类广告，翻译服务，礼仪服务，展览展示服务，企业形象策划，公关活动策划，体育赛事活动策划，摄影服务，计算机服务，计算机数据处理，计算机软件开发，集成电路设计，计算机网络工程施工。【依法须经批准的项目，经相关部门批准后方可开展经营活动】', 'domdistrict': None, 'dom': '上海市奉贤区奉柘公路825号7幢112室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '奉贤区市场监管局', 'regorg_province': '上海', 'regorg_city': '上海市', 'regorg_county': '奉贤区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '刘胜霞', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qe4ca678407f7454595527abc1d60833e', 'fr_person_id': 'p_7a02e029195a49be80ef5aecdc884837', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8D%97%E4%BA%AC%E5%AE%89%E6%A0%BC%E5%8A%B3%E5%8A%A1%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528238, 'pripid': 'qf39f771a118b4086ae054c99c2755596', 's_ext_nodenum': None, 'entname': '南京安格劳务服务有限公司', 'oriregno': None, 'regno': '320103000181976', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2009, 5, 13), 'opto': datetime.date(2029, 5, 12), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2009, 5, 13), 'apprdate': datetime.date(2018, 12, 17), 'regorg': None, 'entstatus': None, 'regcap': Decimal('30.000000'), 'opscope': '许可经营范围:一般经营范围:提供劳务服务；园林绿化工程设计、施工；图文设计；机械设备租赁；搬运装卸；保洁服务；电子产品、办公用品、五金销售。', 'domdistrict': None, 'dom': '南京市白下区瑞金路48号四楼A2室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '南京市秦淮区市场监督管理局', 'regorg_province': '江苏', 'regorg_city': '南京市', 'regorg_county': '秦淮区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '吊销', 'frname': '杜俊', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': datetime.date(2018, 12, 17), 'eid': 'qf39f771a118b4086ae054c99c2755596', 'fr_person_id': 'p_9f1fb0f6ef5d4b71b2d841e4afa904f1', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%BD%9B%E5%B1%B1%E5%B8%82%E9%82%93%E7%A6%84%E6%99%AE%E5%AF%9D%E5%85%B7%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528241, 'pripid': 'qf0ba96f0ea434f5dbda2bb193580547a', 's_ext_nodenum': None, 'entname': '佛山市邓禄普寝具有限公司', 'oriregno': None, 'regno': '440681000319284', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2011, 9, 9), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2011, 9, 9), 'apprdate': datetime.date(2015, 7, 15), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '销售：家具，寝具床上用品，酒店布草工程，睡眠寝具研发和开发。经营和代理各类商品及技术的进出口业务（国家限定经营或禁止进出口的商品及技术除外，涉及许可证的必须先凭有效许可证经营）。', 'domdistrict': None, 'dom': '佛山市顺德区龙江镇龙江居委会325国道龙江段77号之一', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '佛山市顺德区市场安全监管局', 'regorg_province': '广东', 'regorg_city': '佛山市', 'regorg_county': '顺德区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '张有林', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qf0ba96f0ea434f5dbda2bb193580547a', 'fr_person_id': 'p_d05ec69cbb5b45b8b8367631c560e2e0', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%82%AF%E9%83%B8%E5%B8%82%E9%91%AB%E5%B8%85%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528242, 'pripid': 'q3fa129c9e56441098afb87e862068feb', 's_ext_nodenum': None, 'entname': '邯郸市鑫帅贸易有限公司', 'oriregno': None, 'regno': '130423000013530', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2013, 3, 26), 'opto': datetime.date(2023, 3, 25), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2013, 3, 26), 'apprdate': datetime.date(2013, 3, 26), 'regorg': None, 'entstatus': None, 'regcap': Decimal('400.000000'), 'opscope': '钢材、五金、玻璃、工矿设备、轴承、紧固件经销＊＊＊', 'domdistrict': None, 'dom': '临漳县南东坊镇张修屯村', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '临漳县工商行政管理局', 'regorg_province': '河北', 'regorg_city': '邯郸市', 'regorg_county': '临漳县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '郑先红', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q3fa129c9e56441098afb87e862068feb', 'fr_person_id': 'p_9475509a05b24081b2d46c72fdc707d3', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%87%8D%E5%BA%86%E5%B8%82%E7%B6%A6%E6%B1%9F%E5%8C%BA%E7%86%8A%E4%BC%9F%E5%B9%B3%E9%9D%A2%E8%AE%BE%E8%AE%A1%E5%B7%A5%E4%BD%9C%E5%AE%A4%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528243, 'pripid': 'qfcf395ab01ca432bb12c976199e72dc3', 's_ext_nodenum': None, 'entname': '重庆市綦江区熊伟平面设计工作室', 'oriregno': None, 'regno': '500222200269708', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2013, 12, 9), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2013, 12, 9), 'apprdate': datetime.date(2014, 12, 17), 'regorg': None, 'entstatus': None, 'regcap': Decimal('12.600000'), 'opscope': '室内平面设计*【法律法规禁止经营的不得从事经营，法律法规规定应经审核而未获审批前不得经营】*', 'domdistrict': None, 'dom': '重庆市綦江区文龙街道沙溪路6号二单元2-2（纪委集资楼）', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '重庆市工商行政管理局綦江区分局', 'regorg_province': '重庆', 'regorg_city': '重庆市', 'regorg_county': '綦江区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '熊伟', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qfcf395ab01ca432bb12c976199e72dc3', 'fr_person_id': 'p_a0943a50077d490f81e1c6fefb264457', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%87%8D%E5%BA%86%E8%BE%89%E8%BD%A9%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528247, 'pripid': 'qe2c50af09b484366858a2dc15a7d3355', 's_ext_nodenum': None, 'entname': '重庆辉轩贸易有限公司', 'oriregno': None, 'regno': '500112000278726', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2013, 9, 26), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2013, 9, 26), 'apprdate': datetime.date(2014, 9, 18), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '销售：日用百货、电子产品、针纺织品、建筑材料（不含危险化学品）、金属材料、五金交电；货物及技术进出口。**国家法律、法规禁止经营的不得经营；国家法律、法规规定应经审批而未获审批前不得经营**', 'domdistrict': None, 'dom': '重庆市渝北区回兴街道宝圣大道1090号云湖花园13幢1-5', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '重庆市工商行政管理局渝北区分局', 'regorg_province': '重庆', 'regorg_city': '重庆市', 'regorg_county': '渝北区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '周婷', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qe2c50af09b484366858a2dc15a7d3355', 'fr_person_id': 'p_91922d250d0d425bb712463b53fb5aa0', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%88%90%E9%83%BD%E9%91%AB%E6%B1%87%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528003, 'pripid': 'q8b84e1cb7c9441bdbb1061a89785502b', 's_ext_nodenum': None, 'entname': '成都鑫汇投资管理有限公司', 'oriregno': None, 'regno': '510107000229079', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': '7212', 'opfrom': datetime.date(2010, 3, 30), 'opto': datetime.date(9999, 12, 31), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 3, 30), 'apprdate': datetime.date(2012, 11, 30), 'regorg': None, 'entstatus': None, 'regcap': Decimal('1010.000000'), 'opscope': '投资管理；国内商务信息咨询；企业营销策划。（以上经营范围国家法律法规规定限制的除外，需许可证的凭许可证在有效期内经营）。', 'domdistrict': None, 'dom': '成都市武侯区碧云路3号1幢4号', 'reccap': Decimal('1010.000000'), 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 13, 16, 2, 5), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': '投资与资产管理', 'regorg_name': '武侯区市场和质量监督管理局', 'regorg_province': '四川', 'regorg_city': '成都市', 'regorg_county': '武侯区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '吊销，未注销', 'frname': '赵兴国', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': datetime.date(2018, 6, 5), 'eid': 'q8b84e1cb7c9441bdbb1061a89785502b', 'fr_person_id': 'p_489dc5516f0845d2818c9bda652a6fe1', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8D%9A%E9%87%8E%E5%8E%BF%E7%BB%BF%E6%BA%90%E7%B2%AE%E9%A3%9F%E5%95%86%E8%B4%B8%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528263, 'pripid': 'q08ccdfe1451c421dbc721a0205bb6803', 's_ext_nodenum': None, 'entname': '博野县绿源粮食商贸有限公司', 'oriregno': None, 'regno': '130637000004992', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 5, 27), 'opto': datetime.date(2020, 5, 27), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 5, 27), 'apprdate': datetime.date(2010, 5, 27), 'regorg': None, 'entstatus': None, 'regcap': Decimal('30.000000'), 'opscope': '粮食收购、销售。（国家法律、行政法规规定禁止经营的除外；涉及专项审批项目，未经批准不得经营）', 'domdistrict': None, 'dom': '博野县胡庄村', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '博野县工商行政管理局', 'regorg_province': '河北', 'regorg_city': '保定市', 'regorg_county': '博野县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '谭彦卿', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q08ccdfe1451c421dbc721a0205bb6803', 'fr_person_id': 'p_45242f62ba914f0385c131e0e4850110', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E8%BF%9E%E4%BA%91%E6%B8%AF%E7%9F%A5%E9%98%B3%E5%B8%82%E6%94%BF%E5%B7%A5%E7%A8%8B%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528265, 'pripid': 'q3019f73e5bd4491caa07a87398f2a2c3', 's_ext_nodenum': None, 'entname': '连云港知阳市政工程有限公司', 'oriregno': None, 'regno': '320705000029172', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 9, 19), 'opto': datetime.date(2030, 9, 18), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 9, 19), 'apprdate': datetime.date(2010, 9, 19), 'regorg': None, 'entstatus': None, 'regcap': Decimal('30.000000'), 'opscope': '许可经营范围:一般经营范围:市政道路工程、园林绿化工程、下水道工程、污水处理工程、土石方工程施工。******', 'domdistrict': None, 'dom': '连云港市新浦区南极路鸿业公寓西楼4号商铺', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '海州区市场监督管理局', 'regorg_province': '江苏', 'regorg_city': '连云港市', 'regorg_county': '海州区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '高传智', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q3019f73e5bd4491caa07a87398f2a2c3', 'fr_person_id': 'p_54cd6d0928c649e1a67fe84498849c77', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E8%B5%A3%E5%B7%9E%E5%87%8C%E6%AD%A3%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528267, 'pripid': 'q0d06e9b659a546a7934ca3efc1efb7ce', 's_ext_nodenum': None, 'entname': '赣州凌正贸易有限公司', 'oriregno': None, 'regno': '360700210081526', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 5, 28), 'opto': datetime.date(2035, 5, 27), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 5, 28), 'apprdate': datetime.date(2015, 7, 17), 'regorg': None, 'entstatus': None, 'regcap': Decimal('500.000000'), 'opscope': '建筑材料、机械设备、办公用品及设备、仪器仪表、文化用品、橡塑制品、玩具、家具、厨具、家用电器、计算机的销售；电子产品的研发、销售及技术服务。（依法须经批准的项目，经相关部门批准后方可开展经营活动）', 'domdistrict': None, 'dom': '江西省赣州市赣县梅林镇赣新大道西段010201号2034室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '赣县市场和质量监督管理局', 'regorg_province': '江西', 'regorg_city': '赣州市', 'regorg_county': '章贡区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '黎高', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q0d06e9b659a546a7934ca3efc1efb7ce', 'fr_person_id': 'p_1d5f7dab042f4a4da84c04cfc28d059a', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%A0%AA%E5%BC%8F%E4%BC%9A%E7%A4%BE%E9%98%BF%E7%89%B9%E6%8B%89%E8%A5%BF%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528269, 'pripid': 'q4ceec9a13bc0447d9bfc0ad0d62577fa', 's_ext_nodenum': None, 'entname': '株式会社阿特拉西', 'oriregno': None, 'regno': '企外苏锡承字第000093号', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2003, 4, 22), 'opto': datetime.date(2005, 2, 28), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2003, 4, 22), 'apprdate': datetime.date(2004, 3, 12), 'regorg': None, 'entstatus': None, 'regcap': Decimal('1753.870000'), 'opscope': '承接无锡美锋金属制品有限公司新工厂建设工程施工。', 'domdistrict': None, 'dom': '无锡新区长江北路1号新城大厦1112号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 56), 'enttype_name': '其他', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '无锡市工商行政管理局', 'regorg_province': '江苏', 'regorg_city': '无锡市', 'regorg_county': None, 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币元', 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '能势清（KIYOSHI NOSE）', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q4ceec9a13bc0447d9bfc0ad0d62577fa', 'fr_person_id': 'p_c99d1b80f66249a486955628ac190a7b', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%BE%B7%E5%B7%9E%E9%93%B6%E9%91%AB%E6%A3%89%E4%B8%9A%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528014, 'pripid': 'qb2345651797a4f948fd5153693ccb7e5', 's_ext_nodenum': None, 'entname': '德州银鑫棉业有限公司', 'oriregno': None, 'regno': '371400018027161', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2003, 9, 27), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2003, 9, 27), 'apprdate': datetime.date(2013, 8, 22), 'regorg': None, 'entstatus': None, 'regcap': Decimal('2000.000000'), 'opscope': '皮棉、棉纱、打包用铁丝、包布、棉短绒、棉副产品的购销；仓储服务（不含危险品）;纺织原料购销（以上范围国家限制和禁止的除外）(依法须经批准的项目，经相关部门批准后方可开展经营活动)。', 'domdistrict': None, 'dom': '德城区天衢工业园恒东路269号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 15, 9, 36, 45), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '德州市市场监督管理局', 'regorg_province': '山东', 'regorg_city': '德州市', 'regorg_county': '德城区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': None, 'entstatus_name': '在营（开业）', 'frname': '刘贵州', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qb2345651797a4f948fd5153693ccb7e5', 'fr_person_id': 'p_be6aab226a614bf9a7cfd36446edb656', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%8A%E6%B5%B7%E5%85%86%E7%A7%B0%E5%BB%BA%E6%9D%90%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528276, 'pripid': 'q98e75805c79e4f67a1e037086e231dd7', 's_ext_nodenum': None, 'entname': '上海兆称建材有限公司', 'oriregno': None, 'regno': '310104000518639', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2012, 6, 4), 'opto': datetime.date(2022, 6, 3), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2012, 6, 4), 'apprdate': datetime.date(2012, 6, 4), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '钢材、建筑材料、金属材料、家用电器、五金交电、电子设备、通讯设备、办公用品、橡塑制品、机电配件、机电设备、针纺织品、计算机软硬件（除计算机信息系统安全专业产品）的销售，风景园林建设工程专项设计施工，建筑装饰专业建设工程设计施工。（涉及行政许可的，凭许可证经营）', 'domdistrict': None, 'dom': '龙吴路1500号2幢D114室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 4), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '徐汇区市场监督管理局', 'regorg_province': '上海', 'regorg_city': '上海市', 'regorg_county': '徐汇区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '李开龙', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q98e75805c79e4f67a1e037086e231dd7', 'fr_person_id': 'p_3333ae1a5431486b86610d790d6e4ca3', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%B4%E6%BC%B3%E5%8E%BF%E8%AF%9A%E9%91%AB%E7%82%AD%E4%B8%9A%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528279, 'pripid': 'q25b0b5a364d34198970d3584cb67b234', 's_ext_nodenum': None, 'entname': '临漳县诚鑫炭业有限公司', 'oriregno': None, 'regno': '130423000006160', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2010, 8, 12), 'opto': datetime.date(2020, 8, 11), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2010, 8, 12), 'apprdate': datetime.date(2010, 8, 12), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '木片、木炭销售***', 'domdistrict': None, 'dom': '临漳县柏鹤集乡有阁刘村西', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '临漳县工商行政管理局', 'regorg_province': '河北', 'regorg_city': '邯郸市', 'regorg_county': '临漳县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '贾运生', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q25b0b5a364d34198970d3584cb67b234', 'fr_person_id': 'p_ca25975edcc0448391c5ae0a6ce78140', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%AD%A6%E6%B1%89%E6%98%8E%E5%90%AF%E5%B7%A5%E8%B4%B8%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528280, 'pripid': 'qb56d0ef8b7c94b8cb4465f67f7670a54', 's_ext_nodenum': None, 'entname': '武汉明启工贸有限公司', 'oriregno': None, 'regno': '420107000034946', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2003, 7, 1), 'opto': datetime.date(2021, 6, 30), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2003, 7, 1), 'apprdate': datetime.date(2014, 8, 19), 'regorg': None, 'entstatus': None, 'regcap': Decimal('450.000000'), 'opscope': '设备（不含特种设备）安装与维修；五金产品、化工产品（不含危险化学品）、建筑材料、日用品、文具用品、机械设备及电子产品批零兼营；空调销售代理（依法须经批准的项目，经相关部门批准后方可开展经营活动）。', 'domdistrict': None, 'dom': '武汉市青山区24街20门3号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '武汉市青山区工商行政管理局（质量技术监督局）', 'regorg_province': '湖北', 'regorg_city': '武汉市', 'regorg_county': '青山区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '王超群', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qb56d0ef8b7c94b8cb4465f67f7670a54', 'fr_person_id': 'p_583e148acb504caba887315e22fc16da', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%B2%A7%E5%B7%9E%E5%B8%82%E6%97%AD%E7%84%B6%E9%A3%9F%E5%93%81%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528284, 'pripid': 'q76660ba84d59457690fab53861313e8c', 's_ext_nodenum': None, 'entname': '沧州市旭然食品有限公司', 'oriregno': None, 'regno': '130921000008940', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2008, 4, 16), 'opto': datetime.date(2028, 4, 15), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2008, 4, 16), 'apprdate': datetime.date(2012, 5, 23), 'regorg': None, 'entstatus': None, 'regcap': Decimal('500.000000'), 'opscope': '蜜饯（分装）、水果制品（水果干制品）制造（凭工业产品生产许可证经营至2013年11月02日）；红枣销售**', 'domdistrict': None, 'dom': '沧县仵龙堂工业园区', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '沧县工商行政管理局', 'regorg_province': '河北', 'regorg_city': '沧州市', 'regorg_county': '沧县', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '何有平', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q76660ba84d59457690fab53861313e8c', 'fr_person_id': 'p_3889d831b665433a8b09700709692987', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%B3%8A%E5%A4%B4%E5%B8%82%E5%90%89%E8%B7%83%E7%8E%AF%E4%BF%9D%E8%AE%BE%E5%A4%87%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528292, 'pripid': 'qb1d6056f997c4e31911fa271a28e077f', 's_ext_nodenum': None, 'entname': '泊头市吉跃环保设备有限公司', 'oriregno': None, 'regno': '130981000041541', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 3, 16), 'opto': datetime.date(2035, 3, 15), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 3, 16), 'apprdate': datetime.date(2015, 3, 16), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '环保设备及配件、脱硫脱硝设备及配件安装销售**（依法须经批准的项目，经相关部门批准后方可开展经营活动）', 'domdistrict': None, 'dom': '河北省沧州市泊头市四营乡常三番村', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '泊头市市场监督管理局', 'regorg_province': '河北', 'regorg_city': '沧州市', 'regorg_county': '泊头市', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '0.0', 'entstatus_name': '在营（开业）', 'frname': '常常', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qb1d6056f997c4e31911fa271a28e077f', 'fr_person_id': 'p_8a935e969dc049cfa8c572cdc308c4b1', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%8A%E6%B5%B7%E5%AE%A3%E6%A1%A5%E5%8D%B0%E5%88%B7%E5%8E%82%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528303, 'pripid': 'q6e30df30e4174c9ab38ca76008dd8c71', 's_ext_nodenum': None, 'entname': '上海宣桥印刷厂', 'oriregno': None, 'regno': '3102251008559', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(1993, 5, 12), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1993, 5, 12), 'apprdate': datetime.date(1993, 5, 12), 'regorg': None, 'entstatus': None, 'regcap': Decimal('36.000000'), 'opscope': '零件印刷，包装印刷，商标印刷，装潢制盒，纸制品，卷筒纸，五金电器，塑料制品，阀门，木制品。', 'domdistrict': None, 'dom': '浦东新区惠南镇农场路18号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '集体所有制', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '浦东新区市场监管局', 'regorg_province': '上海', 'regorg_city': '上海市', 'regorg_county': '浦东新区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '方志中', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q6e30df30e4174c9ab38ca76008dd8c71', 'fr_person_id': 'p_a36098b4a97c42ee9e8802fa26b74413', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%B9%B0%E6%BD%AD%E5%B8%82%E6%9C%88%E6%B9%96%E5%8C%BA%E7%A5%A5%E7%91%9E%E5%BB%BA%E6%9D%90%E7%BB%8F%E8%90%A5%E9%83%A8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528307, 'pripid': 'q63267fbb28b94049846cd35cab60e5af', 's_ext_nodenum': None, 'entname': '鹰潭市月湖区祥瑞建材经营部', 'oriregno': None, 'regno': '360602310002887', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2015, 6, 15), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2015, 6, 15), 'apprdate': datetime.date(2015, 6, 15), 'regorg': None, 'entstatus': None, 'regcap': None, 'opscope': '建材销售。（依法须经批准的项目，经相关部门批准后方可开展经营活动）', 'domdistrict': None, 'dom': '鹰潭市梅园大道30号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '鹰潭市月湖区市场和质量监督管理局', 'regorg_province': '江西', 'regorg_city': '鹰潭市', 'regorg_county': '月湖区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '0.0', 'entstatus_name': '在营（开业）', 'frname': '黄洪海', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q63267fbb28b94049846cd35cab60e5af', 'fr_person_id': 'p_616c845b0859467095356f5266a7e144', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%AD%A6%E6%B1%89%E5%B8%82%E5%90%89%E7%BE%8E%E6%97%A5%E7%94%A8%E5%8C%96%E5%A6%86%E5%93%81%E6%89%B9%E5%8F%91%E9%83%A8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528310, 'pripid': 'q2875845513d249e5bbd59c453bb4ceec', 's_ext_nodenum': None, 'entname': '武汉市吉美日用化妆品批发部', 'oriregno': None, 'regno': '4201061202086', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(1996, 4, 24), 'opto': datetime.date(2000, 4, 13), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1996, 4, 24), 'apprdate': datetime.date(1999, 3, 23), 'regorg': None, 'entstatus': None, 'regcap': Decimal('30.000000'), 'opscope': '日用化妆品零售兼批发★日用百货、服装鞋帽、五金交电、文化用品零售兼批发★99.3.25换', 'domdistrict': None, 'dom': '武昌复兴路三十一中右侧', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '集体所有制', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '武汉市武昌区工商行政管理和质量技术监督局', 'regorg_province': '湖北', 'regorg_city': '武汉市', 'regorg_county': '武昌区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '雷沛昌', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q2875845513d249e5bbd59c453bb4ceec', 'fr_person_id': 'p_49f8eaa423ba465a95d09bf9f3390afa', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%B9%BF%E8%A5%BF%E5%8D%97%E5%AE%81%E9%AA%91%E7%A6%8F%E6%9D%A5%E8%BD%A6%E4%B8%9A%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528313, 'pripid': 'q0edba4fd675f44ccb9258126b5494b47', 's_ext_nodenum': None, 'entname': '广西南宁骑福来车业有限公司', 'oriregno': None, 'regno': '450111200054178', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2011, 6, 17), 'opto': datetime.date(2021, 6, 17), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2011, 6, 17), 'apprdate': datetime.date(2011, 6, 17), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '电动自行车（只限经营技术标准为：车速不大于２０ｋｍ／ｈ；整车重量不大于４０ｋｇ；电动机额定连续输出功率不大于２４０ｗ；具有良好地脚踏骑行功能。）及零配件、自行车、摩托车、车辆配件、机电设备、童车、玩具、机械设备的销售及售后服务；国内贸易（除法律、法规禁止或限制经营的行业或项目外，均可自主选择经营），自营和代理一般经营项目商品和技术的进出口业务。', 'domdistrict': None, 'dom': '南宁市西乡塘区连畴村二队广场Ａ５号仓库', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '南宁市工商行政管理局高新技术产业开发区分局银达工商所', 'regorg_province': '广西', 'regorg_city': '南宁市', 'regorg_county': '西乡塘区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '张成伟', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q0edba4fd675f44ccb9258126b5494b47', 'fr_person_id': 'p_47c3038573884fd299835b02f5f38d1b', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%8D%81%E5%A0%B0%E5%B8%82%E6%96%B0%E6%B1%87%E7%B3%96%E9%85%92%E5%89%AF%E9%A3%9F%E5%93%81%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528315, 'pripid': 'qc609fa0383f8431fab0d46cca031d5c7', 's_ext_nodenum': None, 'entname': '十堰市新汇糖酒副食品有限公司', 'oriregno': None, 'regno': '4203302060837', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(1997, 4, 29), 'opto': datetime.date(2000, 4, 28), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(1997, 4, 29), 'apprdate': datetime.date(1997, 4, 29), 'regorg': None, 'entstatus': None, 'regcap': Decimal('50.000000'), 'opscope': '副食品、酒类、土特产品、日用百货、文化用品、办公用品、纺织品、服装、家电交电产品、汽车配件、建筑材料销售。', 'domdistrict': None, 'dom': '十堰市新闻出版局1-2楼', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '有限责任公司', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '十堰市工商行政管理局', 'regorg_province': '湖北', 'regorg_city': '十堰市', 'regorg_county': None, 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '朱习秀', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qc609fa0383f8431fab0d46cca031d5c7', 'fr_person_id': 'p_061241fd0d2140c0aa6902515ccc477f', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E6%BB%A8%E5%B7%9E%E5%B8%82%E4%B9%BE%E6%B1%87%E6%8A%95%E8%B5%84%E5%92%A8%E8%AF%A2%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528061, 'pripid': 'q45051cc118024f0cbc71aae8e058691d', 's_ext_nodenum': None, 'entname': '滨州市乾汇投资咨询有限公司', 'oriregno': None, 'regno': '371600200047819', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2014, 10, 15), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2014, 10, 15), 'apprdate': datetime.date(2014, 10, 15), 'regorg': None, 'entstatus': None, 'regcap': Decimal('1200.000000'), 'opscope': '投资咨询（不含证券、期货投资咨询）；二手房交易(依法须经批准的项目，经相关部门批准后方可开展经营活动)', 'domdistrict': None, 'dom': '山东省滨州市滨城区486号浩泰大厦410室', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 31, 26), 'enttype_name': '有限责任公司（自然人独资）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '滨州市工商行政管理局', 'regorg_province': '山东', 'regorg_city': '滨州市', 'regorg_county': None, 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '郝金水', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q45051cc118024f0cbc71aae8e058691d', 'fr_person_id': 'p_b2f2ddba0e4c4eb7b92ff8cec3c5013e', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E9%87%8D%E5%BA%86%E5%B8%82%E6%B1%9F%E6%B4%A5%E5%8C%BA%E6%9A%96%E5%A8%87%E5%BB%BA%E6%9D%90%E7%BB%8F%E8%90%A5%E9%83%A8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528317, 'pripid': 'q4903e8f00880455998255402a70b2a7f', 's_ext_nodenum': None, 'entname': '重庆市江津区暖娇建材经营部', 'oriregno': None, 'regno': '500381200032169', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2011, 12, 14), 'opto': None, 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2011, 12, 14), 'apprdate': datetime.date(2011, 12, 14), 'regorg': None, 'entstatus': None, 'regcap': Decimal('10.000000'), 'opscope': '建材（不含危险化学品）销售。', 'domdistrict': None, 'dom': '重庆市江津区几江街道办事处东部新城东城中央4幢负2-13', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '个人独资企业', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '重庆市工商行政管理局江津区分局', 'regorg_province': '重庆', 'regorg_city': '重庆市', 'regorg_county': '江津区', 'credit_code': None, 'org_code': None, 'regcapcur_name': None, 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '何小红', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'q4903e8f00880455998255402a70b2a7f', 'fr_person_id': 'p_b1233986b9e9489ca2cf885e377ebe45', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%A4%AA%E5%8E%9F%E5%B8%82%E5%B0%96%E8%8D%89%E5%9D%AA%E5%8C%BA%E4%B8%AD%E5%A4%A9%E5%AE%8F%E7%BF%94%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 45528318, 'pripid': 'qca3ae9f201ce4732bfd429d512a467b1', 's_ext_nodenum': None, 'entname': '太原市尖草坪区中天宏翔贸易有限公司', 'oriregno': None, 'regno': '140100200279335', 'enttype': None, 'ppripid': None, 'pentname': None, 'industryphy': None, 'industryco': None, 'opfrom': datetime.date(2005, 10, 18), 'opto': datetime.date(2025, 10, 12), 'postalcode': None, 'tel': None, 'email': None, 'esdate': datetime.date(2005, 10, 18), 'apprdate': datetime.date(2016, 6, 18), 'regorg': None, 'entstatus': None, 'regcap': Decimal('300.000000'), 'opscope': '建材（不含木材）、机电产品（不含小轿车）、五金交电、办公用品、电子产品、工矿设备及配件、水暖器材、电线电缆、铝合金制品、不锈钢制品、混凝土制品、卫生洁具、石材、装潢材料的销售。（法律法规禁止经营的不得经营，需经审批的未经审批前不得经营）****；', 'domdistrict': None, 'dom': '太原市尖草坪区向阳镇西村新纪街27号', 'reccap': None, 'regcapcur': None, 's_ext_timestamp': datetime.datetime(2019, 3, 21, 11, 48, 5), 'enttype_name': '有限责任公司（自然人投资或控股）', 'industryphy_name': None, 'industryco_name': None, 'regorg_name': '太原市工商行政管理局尖草坪分局', 'regorg_province': '山西', 'regorg_city': '太原市', 'regorg_county': '尖草坪区', 'credit_code': None, 'org_code': None, 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '黄海', 'fr_cerno': None, 'fr_cerno_aes': None, 'candate': None, 'revdate': None, 'eid': 'qca3ae9f201ce4732bfd429d512a467b1', 'fr_person_id': 'p_55c97b68c96e42ab8e6014563a030e51', 'pid_reliability': None, 'lng': None, 'lat': None, 'revcan_rea': None, 'loc_exact': 0, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%9B%BD%E5%BC%80%E7%B2%BE%E8%AF%9A%EF%BC%88%E5%8C%97%E4%BA%AC%EF%BC%89%E6%8A%95%E8%B5%84%E5%9F%BA%E9%87%91%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 35517088, 'pripid': '20e38b8b3b739769013b8de1162f4af2', 's_ext_nodenum': '110000', 'entname': '国开精诚（北京）投资基金有限公司', 'oriregno': None, 'regno': '110000015455045', 'enttype': '1190', 'ppripid': None, 'pentname': None, 'industryphy': 'L', 'industryco': '7212', 'opfrom': datetime.date(2012, 12, 10), 'opto': datetime.date(2022, 12, 9), 'postalcode': '100035', 'tel': '88308477', 'email': 'panzejun@cdb.com', 'esdate': datetime.date(2012, 12, 10), 'apprdate': datetime.date(2018, 10, 25), 'regorg': '110000', 'entstatus': '1', 'regcap': Decimal('684000.000000'), 'opscope': '非证券业务的投资、投资管理、咨询。（“1、未经有关部门批准，不得以公开方式募集资金；2、不得公开开展证券类产品和金融衍生品交易活动；3、不得发放贷款；4、不得对所投资企业以外的其他企业提供担保；5、不得向投资者承诺投资本金不受损失或者承诺最低收益”；企业依法自主选择经营项目，开展经营活动；依法须经批准的项目，经相关部门批准后依批准的内容开展经营活动；不得从事本市产业政策禁止和限制类项目的经营活动。）', 'domdistrict': '110102', 'dom': '北京市西城区金融大街7号英蓝国际金融中心F1009', 'reccap': Decimal('684000.000000'), 'regcapcur': '156', 's_ext_timestamp': datetime.datetime(2018, 12, 19, 17, 15, 43), 'enttype_name': '其他有限责任公司', 'industryphy_name': '租赁和商务服务业', 'industryco_name': '投资与资产管理', 'regorg_name': '北京市工商行政管理局西城分局', 'regorg_province': '北京', 'regorg_city': '北京市', 'regorg_county': '西城区', 'credit_code': '91110000059277207F', 'org_code': '059277207', 'regcapcur_name': '人民币', 'share_ratio': '0.0', 'entstatus_name': '在营（开业）', 'frname': '左坤', 'fr_cerno': 'a1c80bcfe91c8bb0c78cd3f43a43057ec59b014d176e16a9b9b18b20c4fbf71e', 'fr_cerno_aes': '2BB04DF8ECD77292A6208E39AA44A62FE197DD4D5F5DC4A4DEEC1B2E96BC8E8E', 'candate': None, 'revdate': None, 'eid': 'q22f9d2b2bd7331eb9d7cdc96bc82893a', 'fr_person_id': 'p_794b5517d83b49ec8b9ab8e8d84062b2', 'pid_reliability': Decimal('9.0000'), 'lng': Decimal('116.3644051252939700'), 'lat': Decimal('39.9266543178955700'), 'revcan_rea': None, 'loc_exact': 1, 'street': None, 'park': None}
+{'id': 1484436, 'eid': 'q22f9d2b2bd7331eb9d7cdc96bc82893a', 'taxpayer_id': '110102059277207', 'ent_name': '国开精诚（北京）投资基金有限公司', 'reg_no': '110000015455045', 'credit_code': '91110000059277207F', 'year': '2015', 'level': 'A', 'taxcode': 110000, 'create_time': datetime.datetime(2018, 5, 2, 10, 27, 13)}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E5%9B%BD%E5%BC%80%E7%91%9E%E6%98%8E%EF%BC%88%E5%8C%97%E4%BA%AC%EF%BC%89%E6%8A%95%E8%B5%84%E5%9F%BA%E9%87%91%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 4962388, 'pripid': '20e38b8b3d672cbf013d7ba731b46668', 's_ext_nodenum': '110000', 'entname': '国开瑞明（北京）投资基金有限公司', 'oriregno': None, 'regno': '110000015697907', 'enttype': '1190', 'ppripid': None, 'pentname': None, 'industryphy': 'L', 'industryco': '7212', 'opfrom': datetime.date(2013, 3, 14), 'opto': datetime.date(2023, 3, 13), 'postalcode': '100035', 'tel': '010-58878516', 'email': 'liu_liting@cdb-capital.com', 'esdate': datetime.date(2013, 3, 14), 'apprdate': datetime.date(2019, 2, 1), 'regorg': '110000', 'entstatus': '1', 'regcap': Decimal('294000.000000'), 'opscope': '非证券业务的投资、投资管理、咨询。（“1、未经有关部门批准，不得以公开方式募集资金；2、不得公开开展证券类产品和金融衍生品交易活动；3、不得发放贷款；4、不得对所投资企业以外的其他企业提供担保；5、不得向投资者承诺投资本金不受损失或者承诺最低收益”；企业依法自主选择经营项目，开展经营活动；依法须经批准的项目，经相关部门批准后依批准的内容开展经营活动；不得从事本市产业政策禁止和限制类项目的经营活动。）', 'domdistrict': '110106', 'dom': '北京市丰台区丽泽路18号院1号楼501-20室', 'reccap': Decimal('294000.000000'), 'regcapcur': '156', 's_ext_timestamp': datetime.datetime(2019, 2, 18, 16, 36, 30), 'enttype_name': '其他有限责任公司', 'industryphy_name': '租赁和商务服务业', 'industryco_name': '投资与资产管理', 'regorg_name': '北京市工商行政管理局丰台分局', 'regorg_province': '北京', 'regorg_city': '北京市', 'regorg_county': '丰台区', 'credit_code': '9111000006488989XP', 'org_code': '06488989X', 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '李晓峰', 'fr_cerno': 'bdfeb45338baf1ee00bb1a41d4c8b75c627988a8dfcf79e8352ad22b89ef235c', 'fr_cerno_aes': '773F3536A101914CE5F87AD4976C2B7E0A056D60CCA3BC11044D8C1451164BC5', 'candate': None, 'revdate': None, 'eid': 'qb05fe05ba7245be8a1dd4cb7adf71e95', 'fr_person_id': 'p_b8ff39a9fb6b0682c2096b6f85a233d4', 'pid_reliability': Decimal('9.0000'), 'lng': Decimal('116.3389303102010200'), 'lat': Decimal('39.8728409096348000'), 'revcan_rea': None, 'loc_exact': 1, 'street': None, 'park': None}
+http://10.1.1.114:7887/api/request?uid=qqqq&amp;api=GS004&amp;args=%7B%22entInfo%22%3A%22%E4%B8%AD%E8%8B%B1%E7%9B%8A%E5%88%A9%E8%B5%84%E4%BA%A7%E7%AE%A1%E7%90%86%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%7D&amp;sign=1d3bc106ce5a87d0d78532a74b9b3e55
+0000
+查询成功
+basicList
+entHisList
+{'id': 36631724, 'pripid': '20e38b8c3e1aac05013e1fda93545327', 's_ext_nodenum': '110000', 'entname': '中英益利资产管理股份有限公司', 'oriregno': None, 'regno': '110000015802455', 'enttype': '1229', 'ppripid': None, 'pentname': None, 'industryphy': 'L', 'industryco': '7212', 'opfrom': datetime.date(2013, 4, 12), 'opto': datetime.date(9999, 12, 31), 'postalcode': '100028', 'tel': '56612888', 'email': 'martin=cai@aviva-cafco.com.cn', 'esdate': datetime.date(2013, 4, 12), 'apprdate': datetime.date(2016, 6, 8), 'regorg': '110105', 'entstatus': '1', 'regcap': Decimal('10000.000000'), 'opscope': '受托管理委托人委托的人民币、外币资金；管理运用自有人民币、外币资金；开展保险资产管理产品业务；中国保监会批准的其他业务；国务院其他部门批准的业务。(企业依法自主选择经营项目，开展经营活动；依法须经批准的项目，经相关部门批准后依批准的内容开展经营活动；不得从事本市产业政策禁止和限制类项目的经营活动。)', 'domdistrict': '110105', 'dom': '北京市朝阳区曙光西里甲5号院22号楼1805、1806和1807单元', 'reccap': Decimal('10000.000000'), 'regcapcur': '156', 's_ext_timestamp': datetime.datetime(2019, 2, 19, 16, 38, 7), 'enttype_name': '其他股份有限公司（非上市）', 'industryphy_name': '租赁和商务服务业', 'industryco_name': '投资与资产管理', 'regorg_name': '北京市工商行政管理局朝阳分局', 'regorg_province': '北京', 'regorg_city': '北京市', 'regorg_county': '朝阳区', 'credit_code': '91110000067335200L', 'org_code': '067335200', 'regcapcur_name': '人民币', 'share_ratio': '100.0', 'entstatus_name': '在营（开业）', 'frname': '俞宁', 'fr_cerno': 'ca9394702f1a21edfc5dd53d0f7391510bc640afbb576442fed2de1844c5e0a9', 'fr_cerno_aes': '5377BA50D2F97B6955734F58E3A4E190B49C9666ADCCB1B96D92EECA7BBE0F9D', 'candate': None, 'revdate': None, 'eid': 'qea64a92342b0ae08c1d54d55c2e108e4', 'fr_person_id': 'p_e2eb69a88e75735d04e76fe50b9ae9b5', 'pid_reliability': Decimal('0.0000'), 'lng': Decimal('116.4641516800535000'), 'lat': Decimal('39.9684845760063400'), 'revcan_rea': None, 'loc_exact': 1, 'street': None, 'park': None}
+{'id': 2862648, 'eid': 'qea64a92342b0ae08c1d54d55c2e108e4', 'taxpayer_id': '110105067335200', 'ent_name': '中英益利资产管理股份有限公司', 'reg_no': '110000015802455', 'credit_code': '91110000067335200L', 'year': '2017', 'level': 'A', 'taxcode': 110000, 'create_time': datetime.datetime(2018, 5, 2, 10, 27, 13)}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+        <tr id='total_row'>
+            <td>总计</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+        <div id='ending'>&nbsp;</div>
+        
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chart'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title : {
+                text: '测试执行情况',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            color: ['#95b75d', 'grey', '#b64645'],
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['通过','失败','错误']
+            },
+            series : [
+                {
+                    name: '测试执行情况',
+                    type: 'pie',
+                    radius : '60%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:1, name:'通过'},
+                        {value:0, name:'失败'},
+                        {value:0, name:'错误'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    
+    </div>
+</body>
+</html>
